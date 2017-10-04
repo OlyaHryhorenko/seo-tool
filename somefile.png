@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+	<title>Buy Essay Online | MyEssay</title>
+	<meta name="description" content="Buy essays online on our Writing Service MyEssay, that you’ll be proud to submit at really astounding prices. Become our regular customer and enjoy fine discounts on your further orders.">
+	<meta name="keywords" content="buy essay, buy essay online">
+	
+	
+	
+	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link rel="shortcut icon" href="/static/img/favicon/favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon" href="/static/img/favicon/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/static/img/favicon/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/static/img/favicon/apple-touch-icon-114x114.png">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="/static/css/font-awesome.min.css">
+	<!--<script async="" charset="utf-8" src="//v2.zopim.com/?4v4bzZ5oAmwMWZJohG2uLy6LDejcKugP" type="text/javascript"></script>-->
+	<link rel="stylesheet" href="/static/css/modal.css?v=1">
+
+	<link rel="stylesheet" href="/static/css/jquery-ui.css">
+
+	<link rel="stylesheet" href="/static/css/bootstrap.css">
+	<link rel="stylesheet" href="/static/css/main.css">
+	<link rel="stylesheet" href="/static/css/main-media.css">
+	<link rel="stylesheet" href="/static/css/jquery-ui.css">
+	<link rel="stylesheet" href="/static/css/footer.css">
+	<link rel="stylesheet" href="/static/css/header.css">
+	<link rel="stylesheet" href="/static/css/social.css">
+	<link rel="stylesheet" href="/static/css/animate.min.css">
+	<link rel="stylesheet" href="/static/css/style.css">
+	<link rel="stylesheet" href="/static/css/owl.carousel.min.css">
+	<link rel="stylesheet" href="/static/css/owl.theme.default.min.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+	<script src="/static/js/jquery-ui.min.js"></script>
+	<script src="/static/js/owl.carousel.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+	<!--<script src="/static/app/pickadate/js/picker.js"></script>-->
+	<!--<script src="/static/app/pickadate/js/picker.date.js"></script>-->
+	<!--<script src="/static/app/pickadate/js/picker.time.js"></script>-->
+	<script src="/static/js/wow.min.js"></script>
+
+	   <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-104993356-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+	   
+
+  	<script src="/static/js/moment.js"></script>
+</head>
+<body>
+
+
+	<div id="global-modal" class="modal">
+	<div class="bg-modal"></div>
+	<div class="modal-window">
+		<button class="close"></button>
+		<form action="/alogin" method="POST">
+			<div class="modal-header">log into your account</div>
+			<input type="email" name="email" autocomplete="off" placeholder="Email" required="required" id="remail">
+			<input type="password" name="password" autocomplete="off" placeholder="Password" required="required" id="rpassword">
+			<div class="modal-footer">
+				<p class="error" style="font-weight:400; text-transform:none; font-family: 'Open Sans', sans-serif;">Unrecognized username or password.</p>
+				<button id="log-in-button" onclick="alogin2()">sign in</button>
+				<div class="forgot">
+					Forgot your password?
+					<a href="/forgot" class="forgot">Reset it here.</a>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+<div class="first-screen conteiner-fluid">
+	<div class="row">
+		<header id="main">
+			<div class="header-cont container">
+				<div class="row">
+					<div class="col-lg-2 col-md-2 col-sm-12 home">
+						<a href="/">
+							<span class="flag" id="myssay-fl"></span>
+							<p><img src="/static/img/icons/home-icon.png" alt="">
+								MYSSAY</p></a>
+							</div>
+							<div class="navbar-header">
+						      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+						        <span class="sr-only">Toggle navigation</span>
+						        <span class="icon-bar"></span>
+						        <span class="icon-bar"></span>
+						        <span class="icon-bar"></span>
+						      </button>
+						    </div>
+							<div class="col-lg-7 col-md-7 col-sm-7 nav-cont collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+								<nav class="main-nav">
+									<!-- <ul class="nav navbar-nav"> -->
+										<li><a href="/">home</a></li> <li><a href="/order">order</a></li> <li><a href="/price">price</a></li><li><a href="/samples" class="anchor-link">samples</a></li><li><a href="/faq">faq</a></li>
+									<!-- </ul> -->
+								</nav>
+							</div>
+							<div class="col-lg-3 col-md-3 col-sm-5 reg-cont">
+								<ul>
+									
+										<li><a  class="login"  id="global-login">Login</a></li>
+										
+								</ul>
+							</div>
+						</div>
+					</div>
+				</header>
+
+
+	<script>
+		window.currentDiscount = 1;
+	</script>
+
+		<div class="after-header">
+			<div class="social-right">
+				<ul>
+					<li><a href=""><img src="/static/img/icons/google-icon.png" alt=""></a></li>
+					<li><a href=""><img src="/static/img/icons/twitter-icon.png" alt=""></a></li>
+					<li><a href=""><img class="fb-icon" src="/static/img/icons/facebook-icon.png" alt=""></a></li>
+					<li><a href=""><img src="/static/img/icons/wifi-icon.png" alt=""></a></li>
+				</ul>
+			</div>
+			<div class="container">
+				<div class="col-xs-12 col-sm-7 col-md-8 logo-cont">
+					<div class="row">
+						<img class="sloy img-responsive wow pulse hidden-xs hidden-sm" data-wow-duration="2s" src="/static/img/sloy.png" alt="">
+						<div class="logo-mid">
+							<img src="/static/img/my-logo.png" class="my-logo img-responsive" alt="">
+							<div class="logo-text">
+								<h1>BUY YOUR ESSAY PAPERS ONLINE FROM THE PROFESSIONAL WRITERS</h1>
+								<a href="/order" id="ord-link">ORDE NOW</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-4 col-sm-5 col-xs-12 order-screen">
+					<div class="order-cont">
+						<form  action="/order" method="POST" class="calc1ContantWrapper">
+	<div class="clearfix">
+	<div class="ord-main-part">
+		<div><label for="calc1Essay">Type of paper needed:</label></div>
+		<div>
+			<select name="paperType" id="calc1Essay">
+              	<option value="1">Essay</option>
+                <option value="2">Coursework</option>
+                <option value="3">Term Paper</option>
+                <option value="4">Research Paper</option>
+                <option value="5">Book Report</option>
+                <option value="6">Movie Review</option>
+                <option value="7">Case Study</option>
+                <option value="8">Annotated Bibliography</option>
+                <option value="9">Article</option>
+                <option value="10">Assignment</option>
+                <option value="11">Dissertation</option>
+                <option value="12">Lab Report</option>
+                <option value="13">Math Problem</option>
+                <option value="14">Presentations</option>
+                <option value="15">Speech</option>
+                <option value="16">Statistics Report</option>
+                <option value="17">Power Point Presentation</option>
+          	</select>
+		</div>
+	</div>
+	<div class="ord-main-part counter">
+		<div class="with_select">
+			<label for="pagesLength">Pages:</label>
+		</div>
+		<div style="position: relative;">
+			<button id="calc1Increase" onClick="return false;">&#8722;</button>
+			<input type="text" id="pagesLength" name="pages" value="1" data-max="999" data-min="1" maxlength="3">
+			<button id="calc1Decrease" onClick="return false;">&#x2b;</button>
+		</div>
+	</div>
+	<div class="ord-main-part">
+		<div><label for="calc1AcadLevel">Academic level</label></div>
+		<div>
+			 <select name="academicLevel" id="calc1AcadLevel">
+                <option value="1">High school</option>
+                <option value="2">College</option>
+                <option value="3">University</option>
+                <option value="4">Master`s</option>
+                <option value="5">Ph.D.</option>
+            </select>
+		</div>
+	</div>
+	<div class="ord-main-part date">
+		<div>
+			<label for="calc1Calendar">Deadline</label>
+		</div>
+		<div class="date_img" style="position: relative;">
+			 <input type="text" id="calc1Calendar" name="deadline" style="cursor: default;">
+			 <i class="date"><img src="/static/img/icons/date-img.png" alt=""></i>
+		</div>
+	</div>
+
+	</div>
+	<div class="bottom continue">
+		<div class="total">
+		<div>
+			<span class="total_price">Total price:</span>
+		</div>
+		<div>
+			<div class="calc1PartRight calc1TotalPrice">
+          		<p class="money" id="totalPrice">$ <i>0</i> </p>
+        	</div>
+		</div>
+	</div>
+		<button class="calc1Continue" id="calc1Continue">CONTINUE</button>
+	</div>
+</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+	<div class="second-screen container-fluid">
+		<div class="row">
+			<div class="container sec-scr-cont">
+				<div class="row">
+					<div class="col-xs-12 sec-scr-text">
+						<h2>WE WILL HELP YOU WRITE YOURS PAPER ONLINE</h2>
+						<p>Messay.com can really write everything for you starting from any discipline/topic and finishing with multiple teachers’ requirements and tight due dates. Due to our ability to cope with absolutely every writing assignment, whether it is an essay, thesis, dissertation, etc, our service has become number 1 in this particular industry. Our experienced and competent native English speaking writers, editors, manages and members of the support team always do their best to deliver 100% customer’s satisfaction, by delivering excellent final results.</p>
+						<p>Therefore, don’t panic when you receive a writing task but have no clue what to start from. Simply contact our round-the-clock operating support and start successful cooperation. Top-notch papers written by certified and skilled experts at a reasonable price are already waiting for you! Have fun and enjoy academic life!</p>
+						<img src="/static/img/mist.png" alt="">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="third-screen container-fluid">
+		<div class="row">
+			<div class="third-cont container">
+				<div class="row">
+					<div class="owl-carousel owl-theme">
+						<div class="col-lg-3 col-xs-12 third-part">
+							<i class="fa fa-handshake-o fa-2x" aria-hidden="true"></i>
+							<h2>RELIABLE</h2>
+							<h4>For the past 6 years, we have completed over 10.000 essay papers.</h4>
+						</div>
+						<div class="col-lg-3 col-xs-12 third-part">
+							<i class="fa fa-briefcase fa-2x" aria-hidden="true"></i>
+							<h2>COMPETENCE</h2>
+							<h4>Our professional team consists of over 600 highly qualified specialists.</h4>
+						</div>
+						<div class="col-lg-3 col-xs-12 third-part">
+							<i class="fa fa-lock fa-2x" aria-hidden="true"></i>
+							<h2>CONFIDENTIALITY</h2>
+							<h4>We maintain strict 100% security and personal confidentiality.</h4>
+						</div>
+						<div class="col-lg-3 col-xs-12 third-part">
+							<i class="fa fa-key fa-2x" aria-hidden="true"></i>
+							<h2>ORIGINALITY</h2>
+							<h4>You can get a certified proof that your essay papers is 100% original.</h4>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="four-screen container-fluid">
+		<div class="row">
+			<div class="container four-cont">
+				<div class="row">
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 four-parts">
+						<h2>WELCOME TO YOUR ONLINE ESSAY WRITER</h2>
+						<img src="/static/img/mist.png" alt="">
+						<h4>Premium, reliable and affordable – what can be better for a student than a masterfully created paper that deserves only A+? Only here, at myssay.com you will find top-quality, reasonable prices and 100% confidentiality;
+						100% plagiarism free – every single paper our specialists work on is written from the scratch, following all client’s recommendations and requirements. In such a way, we provide unique and exclusive content. We also check finished papers for plagiarism with special software;</h4>
+						<img src="/static/img/mist.png" class="mist-rot" alt="">
+					
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 four-parts">
+						<h2>IMPROVE YOUR GRADES - USE OUR SERVICE</h2>
+						<img src="/static/img/mist.png" alt="">
+						<h4>24/7/365 client assistance – in case of any writing troubles, additional information, questions or technical issues – our trained and friendly support representatives are always at your convenience no matter what time it is;
+						Professional, certified and enthusiastic – all writers we hire are native English speakers and holders of master’s or doctorate’s degrees. With their expertise in many fields of studies, you have all chances to succeed;
+						Qualified custom writing – myssay.com has been on the market for a long time and has got a reputation of the most reliable and professional essay writing company. We have already helped hundreds of thousands of students worldwide to reach their academic goals and are not going to stop!</h4>
+						<img src="/static/img/mist.png" class="mist-rot" alt="">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="fifth-screen conteiner-fluid">
+		<div class="row">
+			<div class="fifth-cont container">
+				<div class="">
+					<h2>TESTIMONIALS</h2>
+					<h3>PEOPLE TALKING ABOUT US</h3>
+					<div class="owl-carousel owl-theme">
+						<div class="col-lg-4 col-xs-12 fifth-parts wow bounceInLeft" data-wow-delay="0.5s">
+							<img src="/static/img/ask-ph-1.png" alt="">
+							<h4>HARRY,USA</h4>
+							<h5>I was really busy with my part-time job and suddenly I have got an assignment to write. I had no idea what to start from and that’s exactly where myssay.com helped me, having written this paper for me at a reasonable price!</h5>
+						</div>
+						<div class="col-lg-4 col-xs-12 fifth-parts">
+							<img src="/static/img/ask-ph-2.png" alt="">
+							<h4>JENNIFER,UK</h4>
+							<h5>This writing service assisted me greatly when I was running out of time with one of the essays that had a very tight deadline. The paper was written professionally and on-time. As a result, I got and A. Of course, I’m going to use this company’s services again when I need it.</h5>
+						</div>
+						<div class="col-lg-4 col-xs-12 fifth-parts wow bounceInRight" data-wow-delay="0.5s">
+							<img src="/static/img/ask-ph-3.png" alt="">
+							<h4>BEN,AUSTRALIA</h4>
+							<h5>Brilliant quality of a paper, on-time delivery and cheap price – these are just a few of the dozens benefits I received from myssay.com. Due to this service I have considerably improved my performance in several subjects and going to use this qualified assistance further.</h5>
+						</div>
+					</div>
+					<a href="/order" id="ord-link">ORDE NOW</a>
+				</div>
+				<img src="/static/img/sloy-2.png" alt="" class="sloy-two">
+			</div>
+		</div>
+	</div>
+
+	<div class="third-screen container-fluid">
+		<div class="row">
+			<div class="container four-cont">
+				<div class="row">
+					<div class="col-xs-12 four-parts seo_text">
+						<h2>Buy essay online</h2>
+						<img src="/static/img/mist.png" alt="">
+						<h3 class="ital">Do you want to buy custom essays? Come to visit myssay.com</h3>
+						<p>Who would ever think that essay writing can be so complicated and with so many tutor’s requirements and instructions? However, it is really like that once you enter a college or university – writing tasks are getting tougher and tougher with every new academic year. No wonder why such a great number of students from all over the world find it hard to create a worthy paper within a stated deadline. Apart from lack of time and inability to find current materials, references and information for the content, it is also difficult to have experience in writing as it is a “gift” that comes naturally. But of course, even with the time, not every single person can become a man of word, a master who easily researches, analyzes and writes it down perfectly on a paper. Exactly for those students who need professional assistance in the person of a certified and skilled author, we gladly offer myssay.com website, where you can easily and quickly buy essays of the highest possible level and at a price that will positively surprise you.</p>
+						<p>In simple words if you are assigned with an essay but you can’t cope with it due to some grounds, then don’t hesitate to contact our professional company that would eagerly do the job for you!</p>
+						<h3 class="ital">Why choose us? – We are legit, trustworthy and genuine!</h3>
+						<p>Among hundreds of similar online essay writing firms, you should choose the best, most qualified and reliable one. At myssay.com we offer to not only buy essays for college or university but get a paper that would be written by a Ph.D. author with many years of experience in this industry and which is more important, with in-depth knowledge of the subject and consequently, your particular topic. Furthermore, the writing will be created following all stated in an application form requirements and personal needs/demands. Our competent writers, editors, proofreaders and researches always do their best to deliver only excellent outcomes of cooperation that automatically lead clients to successful educational careers. </p>
+						<p>Therefore, no matter what discipline you need assistance with (science, arts, maths, business studies, etc), we are here 24/7/365 to cater your needs immediately. All you have to do is to just give us details regarding the order (topic, number of pages, style, format, vocabulary, etc) by filling a special form on the website. The rest of the job (which you can track) will be professionally performed by our experts.</p>
+						<p>NOTE* Don’t worry about sky-rocket prices when you buy essay papers from us, as we offer affordable prices along with regular discount programs and bonuses.</p>
+						<p class="seo_text_list">Additionally to all the aforementioned benefits, you also get the following as soon as you place an order:</p>
+						<ul class="seo_text_list_li"> 
+							<li>Multiple free features – free plagiarism report, free introduction page, free revisions, free reference page, etc;</li>
+							<li>Various payment methods – opt for the one that is the most convenient for you;</li>
+							<li>100% confidentiality and privacy – your personal info and data is strictly protected;</li>
+							<li>Native English speaking writers;</li>
+							<li>Fair financial policy – reasonable prices plus discounts. NO hidden charges;</li>
+							<li>Timely delivery;</li>
+							<li>An opportunity to communicate with a writer, thus tracking the progress of the project;</li>
+							<li>Money back guarantee;</li>
+							<li>Friendly and quick 24/7 support;</li>
+							<li>Implementation of all requirements as well as institution’s standards;</li>
+						</ul>
+						<h3 class="ital">We are the experts you need!</h3>
+						<p>If you are seeking for a trusted online writing company from which you can buy essays cheap, then you are already at the right place! Of course, there are hundreds of similar internet agencies like myssay.com, yet we have unique and exclusive features that make us stand out from the rest. At first, our services are affordable for absolutely everyone. Secondly, we guarantee top-quality papers that will make you place orders again and again to get highest grades. Thirdly, we draft writings in accordance with your instructions and never add unnecessary information. Fourthly, we value each and every client of ours and treat his/her individually, thus providing 100% customer’s satisfaction. Don’t miss on this super awesome possibility!</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<footer class="container-fluid">
+		<div class="row">
+			<div class="footer-cont container">
+				<div class="row">
+					<div class="col-lg-12 foot-social">
+						<ul>
+							<li><a href=""><img src="/static/img/icons/google-icon.png" alt=""></a></li>
+							<li><a href=""><img src="/static/img/icons/twitter-icon.png" alt=""></a></li>
+							<li><a href=""><img class="fb-ic" src="/static/img/icons/facebook-icon.png" alt=""></a></li>
+							<li><a href=""><img src="/static/img/icons/wifi-icon.png" alt=""></a></li>
+						</ul>
+					</div>
+					<div class="col-lg-12 foon-nav">
+						<ul>
+						<li><a href="/order">Order</a></li> <li><a href="/price">Price</a></li> <li><a href="/samples">Samples</a></li><li><a href="/faq">FAQ</a></li> 
+						</ul>
+					</div>
+					<div class="col-md-12 foon-nav footer_seo_text">
+						<ul>
+							<ul>
+	<li><a href="/essay-writing">Essay writing</a></li>
+	<li><a href="/essay-writing-service">Essay writing service</a></li>
+	<li><a href="/custom-writing-service">Custom writing service</a></li>
+	<li><a href="/write-my-paper">Write my paper</a></li>
+	<li><a href="/homework">Homework Help</a></li>
+	<li><a href="/dissertation">Dissertation Help</a></li>
+	<li><a href="/coursework-help">Coursework Help</a></li>
+	<li><a href="/case-study">Case study Help</a></li>
+	<li><a href="/business-plan-help">Business plan Help</a></li>
+	<li><a href="/book-review">Book review</a></li>
+	<li><a href="/biography-writing">Biography writing Help</a></li>
+	<li><a href="/article-review">Article review</a></li>
+	<li><a href="/argumentative-essay">Argumentative essay</a></li>
+</ul>
+
+						</ul>
+					</div>
+					<div class="col-md-12 foon-nav footer_text">
+						<ul>
+							<li><a href="/terms-and-conditions">Terms & Conditions</a></li> <li><a href="/revision-policy">Revision Policy</a></li> <li><a href="/privacy-policy">Privacy Policy</a></li> <li><a href="/plagiarism-free">Plagiarism Free</a></li> <li><a href="/disclaimer">Disclaimer</a></li>
+						</ul>
+					</div>
+					<div class="col-lg-12 foot-pay">
+						<ul>
+							<li><a href=""><img class="img-responsive" src="/static/img/icons/aplus.png" alt=""></a></li>
+							<li><a href=""><img class="img-responsive"   src="/static/img/icons/norton.png" alt=""></a></li>
+							<li><a href=""><img class="img-responsive"  src="/static/img/icons/paypal.png" alt=""></a></li>
+							<!--li><a href=""><img class="img-responsive"  src="/static/img/icons/dmca.png" alt=""></a></li-->
+							<li><a href="//www.dmca.com/Protection/Status.aspx?ID=02af6064-f90f-4c84-8f27-19ed82610c52" title="DMCA.com Protection Status" class="dmca-badge"> <img src="//images.dmca.com/Badges/_dmca_premi_badge_1.png?ID=02af6064-f90f-4c84-8f27-19ed82610c52" alt="DMCA.com Protection Status"></a> <script src="//images.dmca.com/Badges/DMCABadgeHelper.min.js"> </script></li>
+                                    </div>
+						</ul>
+
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<p class="footer_copy">&copy; 2013-2017 Myssay. All rights reserved.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</footer>
+
+
+<script src="/static/app/pickadate/js/picker.js"></script>
+<script src="/static/app/pickadate/js/picker.date.js"></script>
+<script src="/static/app/pickadate/js/picker.time.js"></script>
+
+<script src="/static/js/common.js"></script>
+
+
+
+<script src="/static/js/script.js"></script>
+<script src="/static/js/main.js"></script>
+
+
+<script>
+  function getCookie(name) {
+    var matches = document.cookie.match(new RegExp(
+      "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+    ));
+    return matches ? decodeURIComponent(matches[1]) : 0;
+  }
+
+  if(typeof currentDiscount != 'undefined') {
+    if(getCookie('delayDiscount')) {
+      window.delayD = getCookie('delayDiscount');
+    }else{
+      window.delayD = 60000;
+    }
+
+    $('#discount-modal .close').on('click', function() {
+      $('#discount-modal').removeClass('open-discount');
+      document.cookie = 'delayDiscount=240000';//
+      window.delayD = 240000;
+      setTimeout(function() {
+        $('#discount-modal').addClass('open-discount');
+      }, delayD);
+    });
+
+    setTimeout(function() {
+      $('#discount-modal').addClass('open-discount');
+    }, delayD);
+  }
+</script>
+
+
+<script>
+   var isMobile = {
+    Android: function(){
+        return navigator.userAgent.match(/Android/i);
+    },
+    BlackBerry: function(){
+        return navigator.userAgent.match(/BlackBerry/i);
+    },
+    iOS: function(){
+        return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+    },
+    Opera: function(){
+        return navigator.userAgent.match(/Opera Mini/i);
+    },
+    Windows: function(){
+        return navigator.userAgent.match(/IEMobile/i);
+    },
+    any: function(){
+        return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+    }
+  };
+
+
+  $("#calc1AcadLevel, #calc1Essay").selectmenu({
+    select: function() {
+      $(this).trigger('change');
+    }
+  }).on('change', function() {
+    runCalc();
+  });
+
+
+  $(function() {
+
+    var offsetTop = {};
+
+    $('.hidden-for-animation').each(function(e) {
+      var top = $(this).css('top').replace(/[^0-9]/g, ''),
+          offset = $(this).offset().top,
+          key = (top) ? offset - top : offset;
+
+      offsetTop[key] = $(this);
+    });
+
+    if( $(window).width() < 750 || isMobile.any() ) {
+      $('.hidden-for-animation').removeClass('hidden-for-animation');
+      $('.steps-item.hidden').removeClass('hidden');
+    }
+
+    if(Object.keys(offsetTop).length != 0) {
+      var scrollFunction = function(current) {
+        var scrolled = window.pageYOffset || document.documentElement.scrollTop,
+            height = $(window).height();
+
+        scrolled = scrolled + height / 2;
+
+        for(var key in offsetTop) {
+          var m = offsetTop[key].data('margin');
+          m = (m) ? m : 0;
+
+          scrolled = scrolled + m;
+
+          if(scrolled >= key) {
+            if(offsetTop[key].data('current')) {
+              stepsAnim(offsetTop[key]);
+            }else{
+              offsetTop[key].removeClass('hidden-for-animation');
+            }
+            delete offsetTop[key];
+          }
+        }
+      };
+      window.onscroll = scrollFunction;
+      scrollFunction(true);
+    }
+  });
+  if($('#stormtrooper-logout').length != 0) {
+    $('#trooper-header .trooper-nav .header-nav').append('<li class="opened-item dashboard-link"><a href="/dashboard">Dashboard</a></li>');
+  }
+  function stepsAnim(el) {
+    var i = 0,
+        items = el.find('.steps-item'),
+        interval = setInterval(function() {
+          if(!items.eq(i).length) {
+            clearInterval(interval);
+          }
+
+          items.eq(i).removeClass('hidden');
+          i++;
+        }, i + 200);
+/*
+    el.find('.steps-item').each(function() {
+      var l = $(this);
+      l.removeClass('hidden').hide(0).delay(i + 500);
+    });*/
+  }
+</script>
+
+
+
+<script>
+    var calc = {
+  type : '#calc1Essay',
+  page : '#pagesLength',
+  academ : '#calc1AcadLevel',
+  deadline : 'calc1Calendar'
+};
+
+
+$('#pagesLength').on('keyup', function(event) {
+  var charKey = event.keyCode;
+  if(charKey >= 49 && charKey <= 57 || charKey == 8 || charKey == 40 || charKey == 38) {}else{
+    var t = /[^\d]/gi;
+    var c = $(this).val().replace(t, '');
+    $(this).val(c);
+    return false;
+  }
+  switch(charKey) {
+    case 40 : $(this).parents('.order-input-with-button').find('.inline-button.prev').click();
+      break;
+    case 38 : $(this).parents('.order-input-with-button').find('.inline-button.next').click();
+      break;
+  }
+  if($(this).val() > $(this).data('max')){
+    $(this).val($(this).data('max'));
+  }
+  runCalc()
+}).focusout(function() {
+  if($(this).val() == '') {
+    $(this).val( $(this).data('min') );
+  }
+  if($(this).val() > $(this).data('max')){
+    $(this).val($(this).data('max'));
+  }
+}).on('change', function() {
+  runCalc();
+});
+
+$("#calc1Calendar").val(gettomorrowdate());
+
+$("#calc1Calendar").datepicker({
+  showAnim: "slideDown",
+  dateFormat: 'yy-mm-dd',
+  defaultDate : new Date(),
+  minDate : '+1d',
+  maxDate : '+1y',
+  onSelect: function(date) {
+        runCalc();
+    }
+}).on('keydown', function() {
+  return false;
+});
+
+
+
+
+$('#calc1Increase, #calc1Decrease').click(function() {
+  var el = $(this).parent().children('input');
+
+  if( $(this).is('#calc1Increase') && el.data('min') >= el.val() ) {
+    return false;
+  }
+
+  var i = ( $(this).is('#calc1Increase') ) ? +el.val() - 1 : +el.val() + 1;
+  el.val(i);
+  runCalc();
+});
+
+function gettomorrowdate() {
+  return moment().add('days', 7).format('YYYY-MM-DD');
+}
+
+$('#pages').on('keyup', function() {
+    var str = $(this).val(),
+        reg = /[^0-9]/gi;
+
+    str = str.replace(reg, '');
+    $(this).val(str);
+    runCalc();
+}).blur(function() {
+    if( !$(this).val() ) {
+        $(this).val( $(this).data('default') );
+    }
+});
+
+var urgencyData = [43200, 86400, 86400 * 2, 86400 * 3, 86400 * 5, 86400 * 7, 86400 * 9, 86400 * 10],
+        $prc_data = [];
+
+
+
+    function runCalc() {
+        academicLevel = $("#calc1AcadLevel").val();
+        pages = $('#pagesLength').val();
+        deadline = moment(  $("#calc1Calendar").val() );
+        spaced = 2;
+        typeOfWork = 1;
+        if (academicLevel >= 0 && pages > 0 && deadline) {
+            var res = orderCalc(academicLevel, deadline, pages, typeOfWork, spaced).toFixed(2);
+            $('#totalPrice i').html(res);
+        }
+    };
+
+    function setPagesCount(inputValue, pagesCount) {
+        var wordsCount = 300;
+        if ($("[name=spaced]:checked").val() == 1) {
+            wordsCount = 600;
+        }
+
+        $("#words").html(wordsCount * inputValue + " words");
+    }
+
+    function getUrgency(deadline) {
+        var time = +new Date(deadline).getTime(),
+          urgency = 0,
+          urgencyLength = urgencyData.length - 1;
+
+        time2 = +new Date().getTime();
+        time = (time - (+new Date)) / 1000;
+        time = (time < 0) ? 0 : time;
+
+        if (time > urgencyData[urgencyLength]) {
+            urgency = urgencyLength;
+        }
+        else {
+            $.each(urgencyData, function (key, value) {
+                if (time < value) {
+                    urgency = parseInt(key);
+                    return false;
+                }
+            });
+        }
+        return urgency;
+    }
+
+  function orderCalc(level, deadline, pages, typeOfWork, spaced) {
+      var urgency, totalPrice, new_urgency, new_typeOfWork;
+
+      urgency = getUrgency(deadline);
+          new_urgency=urgency;
+
+      if (spaced == 1) {
+          totalPrice *= 2;
+      }
+      if (urgency == 4) new_urgency=5;
+      if (urgency == 5) new_urgency=7;
+      if (urgency == 6) new_urgency=9;
+      if (urgency == 7) new_urgency=30;
+      if (typeOfWork == 2) new_typeOfWork=1;
+      if (typeOfWork == 1) new_typeOfWork=2;
+      if (typeOfWork == 3) {new_typeOfWork=3; spaced=2;}
+
+      totalPrice=(PrcWrk(level, new_urgency, pages, new_typeOfWork))*(PrcSpace(spaced));
+      return totalPrice;
+  };
+
+  function GetListPrise () {
+      var data = {};
+      data['price_on_date'] = moment().format('YYYY-MM-DD');
+      $.ajax({
+          url: '/utils',
+          type: 'POST',
+          async: false,
+          data: JSON.stringify(data),
+          contentType: 'application/json;charset=UTF-8',
+          success: function(datarecived){
+              $prc_data=datarecived;
+          },
+          error: function(error) {
+          }
+      });
+  };
+
+  GetListPrise();
+  runCalc();
+
+  function PrcWrk(level, deadline, pages, typeOfWork) {
+      if ( !jQuery.isEmptyObject($prc_data) ) {
+          for ( var i=0; i<$prc_data.result.length; i++ ){
+              if ( ($prc_data.result[i].id_table == typeOfWork) && ($prc_data.result[i].format == level) && ($prc_data.result[i].urgenc == deadline) ) {
+                  return pages*$prc_data.result[i].price;
+              }
+          }
+      }
+      return 0;
+  }
+
+  function PrcSpace (space) {
+      if ( !jQuery.isEmptyObject($prc_data) ) {
+          for ( var i=0; i<$prc_data.result2.length; i++ ) {
+              if( $prc_data.result2[i].countspace == space ) {
+                  return $prc_data.result2[i].kof;
+              }
+          }
+      }
+      return 1;
+  }
+
+</script>
+
+<script src="/static/js/utils.js"></script>
+</body>
+</html>

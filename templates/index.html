@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO-check by Bryteq</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/css/tether.min.css" />
+     <link rel="stylesheet" href="/static/style.css" />
+    <script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+</head>
+<body>
+<header>
+   <div class="container">
+       <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+          <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+            <a class="navbar-brand" href="#">Bryteq</a>
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+              <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+              </li>
+
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+              <input class="form-control mr-sm-2" type="text" placeholder="Search">
+              <button class="btn btn-outline-success search-btn" type="submit">Search</button>
+            </form>
+          </div>
+        </nav>
+   </div>
+</header>
+<main>
+    <section class="banner">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>SEO tool to monitor sites</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vel pharetra est. Ut eget est quis ex interdum mattis et accumsan tellus. Fusce fringilla tellus ut suscipit rutrum. In eros ex, aliquet id tortor ultrices, tempus porta mauris. Duis sit amet tellus dignissim magna venenatis tristique. Morbi molestie eu tortor ut lacinia.</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="sites">
+        <div class="container">
+            <div class="row">
+                {% for site in sites %}
+                <div class="box col-md-4">
+                    <h4>{{site.url}}</h4>
+                    <p><strong>Created at</strong> - {{site.date}}</p>
+                    <p>Open site page to get more information</p>
+                    <a href="/site?id={{site.id}}" class="btn btn-site">More</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+</main>
+{{icon_link}}
+</body>
+</html>

@@ -1,0 +1,60 @@
+header {
+    background-color: #474e5d;
+    color: #fff;
+}
+
+section.banner {
+    background: #1abc9c;
+    width: 100%;
+    color: #fff;
+    text-align: center;
+    padding: 10%;
+}
+.navbar {
+    background: transparent
+}
+
+.search-btn {
+    border-color: #1abc9c;
+    background: #1abc9c;
+    color: #fff;
+}
+.search-btn:hover {
+    background: #1abc9c
+}
+a.navbar-brand {
+    color:#fff!important;
+}
+
+.navbar-nav a {
+    color:#fff!important;
+}
+
+.navbar-nav li:honer a {
+    color: #1abc9c;
+}
+
+section.sites {
+    padding: 5% 0;
+}
+section.sites h4 {
+    color: #1abc9c;
+}
+
+.btn-site {
+    color: #fff!important;
+    background-color: #1abc9c;
+}
+
+.btn-site:hover {
+    background-color: #474e5d;
+}
+.box {
+    min-height: 200px;
+    position: relative;
+}
+
+.box a.btn-site {
+    position: absolute;
+    bottom: 10px;
+}
