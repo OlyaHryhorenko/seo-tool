@@ -37,65 +37,34 @@
         </nav>
    </div>
 </header>
-<main class="site">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1>Site data manager</h1>
+<main class="main">
+    <section class="main-header">
+        <div class="container">
+            <div class="row">
+                <h1>Dashboard</h1>
+                <p>Hello, {{user[0]['login']}}</p>
+            </div>
+            <div class="row">
+                <form class="form-inline my-2 my-lg-0 col-md-12" method="POST" action="/add_new">
+                    <input type="text" name="url" class="form-control mr-sm-2 col-md-9" placeholder="Enter url to monitor">
+                    <input type="submit" class="btn btn-outline-success add-btn col-md-2">
+                </form>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h3>All sites</h3>
-                <table class="table table-striped">
-                    <thead>
-                      <tr>
-                        <th>Type</th>
-                        <th>Saved data</th>
-                       <th>Status</th>
-                      </tr>
-                    </thead>
-                    <tbody>
+    </section>
 
-                      <tr>
-                        <td><strong>Site url</strong></td>
-                        <td>{{ site[0]['url'] }}</td>
-                      <td>Nothing changed</td>
-                      </tr>
-                      <tr>
-                          <td><strong>title</strong></td>
-                        <td>{{sites_data[0]['title']}}</td>
-                        <td>Nothing changed</td>
-                      </tr>
-                      <tr>
-                        <td><strong>site response</strong></td>
-                        <td>{{sites_data[0]['response']}}</td>
-                          <td>Nothing changed</td>
-                      </tr>
+     <section class="main-body">
+        <div class="container">
+            <div class="row">
+                    <ul>
+                        {% for site in sites %}
+                        <li><a href="/site?id={{site.id}}" target="_blank">{{ site.url }}</a></li>
+                        {% endfor%}
+                    </ul>
 
-                     <tr>
-                         <td><strong>h1</strong></td>
-                        <td>{{sites_data[0]['h1']}}</td>
-                         <td>Nothing changed</td>
-                      </tr>
-
-                    <tr>
-                        <td><strong>robots</strong></td>
-                        <td><code>{{sites_data[0]['robots']}}</code></td>
-                        <td>Nothing changed</td>
-                      </tr>
-                    <tr>
-                        <td><strong>sitemap</strong></td>
-                        <td><code>{{sites_data[0]['sitemap']}}</code></td>
-                        <td>Nothing changed</td>
-                      </tr>
-
-                    </tbody>
-                  </table>
             </div>
         </div>
-    </div>
+     </section>
 </main>
-
 </body>
-</html>
+ </html>

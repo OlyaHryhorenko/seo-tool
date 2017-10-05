@@ -52,6 +52,39 @@
             </div>
         </div>
     </section>
+
+    <section class="sites">
+        <div class="container">
+            <div class="row">
+                {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+                    <div class="alert alert-danger">
+                        {% for message in messages %}
+                            {{ message }}<br>
+                        {% endfor %}
+                    </div>
+
+                  {% endif %}
+                {% endwith %}
+            </div>
+            <div class="row">
+                <form method="POST" action="/login" style="margin: 0 auto;">
+                    <h3>Sing in</h3>
+                    <div class="form-group">
+                        <label>Login: </label>
+                        <input name="login" class="form-control" type="text">
+                    </div>
+                     <div class="form-group">
+                        <label>Password: </label>
+                         <input name="password" class="form-control" type="text">
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-default">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
     <section class="sites">
         <div class="container">
             <div class="row">

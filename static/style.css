@@ -58,3 +58,56 @@ section.sites h4 {
     position: absolute;
     bottom: 10px;
 }
+
+section.main-header h1 {
+   display: block;
+   width: 100%;
+}
+
+section.main-header  {
+    background: #1abc9c;
+    padding: 3%;
+    color: #fff;
+}
+
+section.main-body {
+    padding: 2%;
+}
+
+section.main-body ul {
+    padding: 0;
+    width: 100%;
+}
+section.main-body ul li {
+    list-style: none;
+    padding: 13px 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+     box-shadow: 1px 1px 1px rgba(204, 204, 204, 0.52);
+}
+section.main-body ul li:hover {
+    background: #ccc;
+}
+.add-btn{
+    background:#474e5d;
+    color: #fff;
+    border-color: #474e5d;
+}
+section.main-body ul li a {
+    color: #474e5d;
+    text-decoration: none;
+    margin-bottom: 5px;
+}
+
+.navbar {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+main.site {
+    padding-top: 70px;
+     background-color: #474e5d;
+     color: #fff;
+}

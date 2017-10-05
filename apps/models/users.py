@@ -28,7 +28,6 @@ class Users(object):
     def __del__(self):
         pass
 
-
     def get_user(self, uid):
         """ Get User
             Return all user row.
@@ -55,10 +54,10 @@ class Users(object):
         try:
             if isinstance(credendials, dict):
                 dbuser = self.w.select(
-                    "login", self.db_name, " where login='{0}'".format(credendials['username']))
-                if dbuser[0]['login'] == format(credendials['username']):
+                    "login", self.db_name, " where login='{0}'".format(credendials['login']))
+                if dbuser[0]['login'] == format(credendials['login']):
                     dbpass = self.w.select(
-                        "password", self.db_name, " Where login='{0}'".format(credendials['username']))
+                        "password", self.db_name, " Where login='{0}'".format(credendials['login']))
                     if dbpass[0]['password'] == credendials['password']:
                         return True
                     else:

@@ -8,12 +8,15 @@ class Sites(object):
             raise TypeError
 
         self.w = wrapper
-        self.NAME = 'Sites'
+        self.NAME = 'sites'
 
     db_name = "sites"
 
     def get_all(self):
         return self.w.select(["*"], [self.db_name])
+
+    def get_all_for_user(self, id):
+        return self.w.select(["*"], [self.db_name], "where user_id=%s" % id)
 
     def add_site(self, fields):
         return self.w.insert(fields, self.NAME)
@@ -23,9 +26,3 @@ class Sites(object):
 
     def edit_site(self, fields, condition):
         return self.w.update(fields, self.NAME, condition)
-
-    def change_status(self, status, id):
-        self.w.update({"status": status}, self.NAME, "where id=%s" % id)
-
-    def update_orders(self, orders, last_order, id):
-        self.w.update({"orders": orders, "last_order": last_order}, self.NAME, "where id=%s" % id)
