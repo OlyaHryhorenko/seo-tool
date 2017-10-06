@@ -9,6 +9,7 @@ import random
 import time
 import pytz
 import glob
+import schedule
 import string
 import requests
 from pytz import timezone
@@ -16,6 +17,7 @@ from email.mime.text import MIMEText
 from email.MIMEMultipart import MIMEMultipart
 from email.MIMEBase import MIMEBase
 from email import Encoders
+from threading import Thread
 from functools import wraps
 from smtplib import SMTP_SSL, SMTP
 from time import gmtime, strftime
@@ -59,25 +61,30 @@ SERVER = "localhost"
 app = Flask(__name__)
 sess = Session()
 
+start_time = time.time()
 
 
 
-# def login_required(f):
-#     @wraps(f)
-#     def wrap():
-#         if 'logged_in' in session:
-#             return f()
-#         else:
-#             abort(404)
-#
-#     return wrap
+
+def login_required(f):
+    @wraps(f)
+    def wrap():
+        if session['logged_in'] == True:
+            return f()
+        else:
+            abort(404)
+
+    return wrap
 
 
 @app.route('/', methods=['GET'])
 def index():
     sites = Sites(Wrapper()).get_all()
+    if session['logged_in'] == True:
+        return redirect(url_for('main'))
+    else:
+        return render_template('index.html', sites=sites)
 
-    return render_template('index.html', sites=sites)
 
 
 @app.route('/login', methods=['POST'])
@@ -94,7 +101,15 @@ def login():
     return redirect(url_for('main'))
 
 
+@app.route('/logout',  methods=['GET'])
+def logout():
+    session['id'] = None
+    session['logged_in'] = False
+    return redirect(url_for('index'))
+
+
 @app.route('/main')
+@login_required
 def main():
     user = Users().get_user(session['id'])
     sites = Sites(Wrapper()).get_all_for_user(session['id'])
@@ -112,6 +127,7 @@ def add_new():
 
     # get site info
     response = requests.get(url)
+    response_code = response.status_code
     robots = requests.get(url + "/robots.txt")
     sitemap = requests.get(url + "/sitemap.xml")
     page = BeautifulSoup(response.content)
@@ -119,15 +135,19 @@ def add_new():
     title = page.title
     h1 = page.find('h1')
     robots_content = BeautifulSoup(robots.content)
+    html = page.prettify()
+
     sitemap_content = BeautifulSoup(sitemap.content)
-    meta_description = page.findAll(attrs={"name": "description"})
+    meta_description = page.find("meta", {"name": "description"})['content']
     meta_robots = "robots"
-    meta_title = page.findAll(attrs={"name": "title"})
+    # meta_title = page.find("meta", {"name": "title"})['content']
 
     add_site_data = SiteData(Wrapper()).add_site_data({"site_id": add_new, "title": title, "h1": h1,
-                                                       "meta_description": 'rob', "meta_title": meta_title,
+                                                       "meta_description": meta_description,
+                                                       "meta_title": "meta_title",
                                                        "meta_robots":"",
-                                                       "response": response,
+                                                       "html": escape_string(str(html)),
+                                                       "response": response_code,
                                                        "robots": robots_content,
                                                        "sitemap": escape_string(str(sitemap_content))})
 
@@ -176,20 +196,89 @@ def site():
                            # sitemap_content=sitemap_content)
 
 
-@app.route('/test')
-def test():
-    server = smtplib.SMTP(SERVER, 1025)
-    server.sendmail('olhahryhorenko@gmail.com', 'olhahryhorenko@gmail.com', "msg")
-    server.quit()
-    return 'sent'
+
+@app.route("/site-delete")
+def delete():
+    id = request.args.get('id')
+    delete_data = SiteData(Wrapper()).delete_site_data(id)
+    delete = Sites(Wrapper()).delete_site(id)
+    return jsonify(delete)
+
+
+def check_status():
+    id = "54"
+    site = Sites(Wrapper()).get_site(id)
+    url = site[0]['url']
+
+    #from db
+
+    site_data = SiteData(Wrapper()).get_site_data(id)
+    response_code = site_data[0]['response']
+    sitemap = site_data[0]['robots']
+    html = site_data[0]['html']
+    title = site_data[0]['title']
+    h1 = site_data[0]['h1']
+    robots_content = site_data[0]['robots']
+    sitemap_content = site_data[0]['sitemap']
+    meta_description = site_data[0]['meta_description']
+
+
+    #current response
+    current_response = requests.get(url)
+    current_response_code = current_response.status_code
+    current_robots = requests.get(url + "/robots.txt")
+    current_sitemap = requests.get(url + "/sitemap.xml")
+    current_page = BeautifulSoup(current_response.content)
+    current_title = current_page.title
+    current_h1 = current_page.find('h1')
+    current_robots_content =  BeautifulSoup(current_robots.content)
+    current_sitemap_content = BeautifulSoup(current_sitemap.content)
+    current_meta_description = current_page.find("meta", {"name": "description"})['content']
+
+    if str(response_code) != str(current_response_code):
+        send_mail("response code not the same")
+    else:
+        send_mail("response code  the same")
+    return True
+
+
+def check_status_code():
+    id = "54"
+    site = Sites(Wrapper()).get_site(id)
+    url = site[0]['url']
+    site_data = SiteData(Wrapper()).get_site_data(id)
+    response_code = site_data[0]['response']
+    current_response = requests.get(url)
+    current_response_code = current_response.status_code
+    if str(response_code) != str(current_response_code):
+        send_mail("response code not the same")
+    else:
+        send_mail("response code  the same")
+    return True
+
+
+def send_mail(text):
+    msg = text
+    smtp = SMTP()
+    smtp.connect("mbxsrv.com")
+    smtp.login("o.grigorenko@bryteq.com", "GueUhmXg")
+    smtp.sendmail("olhahryhorencko@gmail.com", "olhahryhorencko@gmail.com", msg)
+    # ##logging.info("from_address = {0}".format(from_address))
+    smtp.quit()
+    return '1'
 
 
 
 if __name__ == "__main__":
     app.secret_key = 'super secret key'
     app.config['SESSION_TYPE'] = 'filesystem'
-
     sess.init_app(app)
     app.run(debug=True)
 else:
-    logging.basicConfig(debug=True, threaded=True,host='0.0.0.0', port=5000)
+    logging.basicConfig(debug=True, threaded=True,
+                        host='0.0.0.0', port=5000)
+
+
+
+
+

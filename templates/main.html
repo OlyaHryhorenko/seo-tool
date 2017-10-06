@@ -6,6 +6,7 @@
     <title>SEO-check by Bryteq</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/css/tether.min.css" />
+   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
      <link rel="stylesheet" href="/static/style.css" />
     <script
   src="https://code.jquery.com/jquery-2.2.4.min.js"
@@ -29,10 +30,7 @@
               </li>
 
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-              <input class="form-control mr-sm-2" type="text" placeholder="Search">
-              <button class="btn btn-outline-success search-btn" type="submit">Search</button>
-            </form>
+            <a class="btn btn-outline-success search-btn" href="/logout">Logout</a>
           </div>
         </nav>
    </div>
@@ -58,7 +56,10 @@
             <div class="row">
                     <ul>
                         {% for site in sites %}
-                        <li><a href="/site?id={{site.id}}" target="_blank">{{ site.url }}</a></li>
+                        <li>
+                            <a href="/site?id={{site.id}}" target="_blank">{{ site.url }}</a>
+                            <a class="delete-item" href="/site-delete?id={{site.id}}"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                        </li>
                         {% endfor%}
                     </ul>
 
@@ -66,5 +67,6 @@
         </div>
      </section>
 </main>
+<script src="/static/js.js"></script>
 </body>
  </html>

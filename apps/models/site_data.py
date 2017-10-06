@@ -23,6 +23,9 @@ class SiteData(object):
 
     def get_site_data(self, id):
         return self.w.select(["*"], [self.db_name], "where site_id=%s" % id)
+
+    def delete_site_data(self, id):
+        return self.w.delete_site(self.NAME, id)
     #
     # def edit_site(self, fields, condition):
     #     return self.w.update(fields, self.NAME, condition)

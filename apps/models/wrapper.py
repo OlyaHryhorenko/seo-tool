@@ -30,6 +30,33 @@ class Wrapper(object):
 			print e
 
 
+	def delete_site(self, table_name, id):
+		try:
+			cursor = self.connect.cursor()
+			cursor.execute('delete from {0} where site_id={1}'.format(table_name, id))
+			self.connect.commit()
+			return True
+		except MySQLdb.Error as e:
+			print e
+			return False
+
+		except Exception as e:
+			print e
+
+
+	def delete(self, table_name, id):
+		try:
+			cursor = self.connect.cursor()
+			cursor.execute('delete from {0} where id={1}'.format(table_name, id))
+			self.connect.commit()
+			return True
+		except MySQLdb.Error as e:
+			print e
+			return False
+
+		except Exception as e:
+			print e
+
 	def update(self, diction, table_names, condition = ""):
 		if not isinstance(table_names, basestring):
 		    table_names = ", ".join(table_names)
@@ -65,7 +92,7 @@ class Wrapper(object):
 			print "--------------------------------"
 			return -1
 
-			
+
 	def __del__(self):
 		self.connect.close()
 

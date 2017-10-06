@@ -26,3 +26,6 @@ class Sites(object):
 
     def edit_site(self, fields, condition):
         return self.w.update(fields, self.NAME, condition)
+
+    def delete_site(self, id):
+        return self.w.delete(self.NAME,  id)

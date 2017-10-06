@@ -111,3 +111,16 @@ main.site {
      background-color: #474e5d;
      color: #fff;
 }
+
+.delete-item {
+    float: right;
+}
+
+.delete-item:hover {
+    color: red;
+}
+
+pre {
+    color: #fff;
+    max-width: 900px;
+}
