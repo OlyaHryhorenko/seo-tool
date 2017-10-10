@@ -12,6 +12,7 @@ import glob
 import schedule
 import string
 import requests
+import socket
 from pytz import timezone
 from email.mime.text import MIMEText
 from email.MIMEMultipart import MIMEMultipart
@@ -40,15 +41,18 @@ import smtplib
 import urllib
 from werkzeug import secure_filename
 from random import randint
+from apscheduler.schedulers.background import BackgroundScheduler
 
 from flask.ext.assets import Environment, Bundle
 from flask.ext.cache import Cache
-from flask.ext.session import Session
+
+
 
 from apps.models.wrapper import Wrapper
 from apps.models.users import Users
 from apps.models.sites import Sites
 from apps.models.site_data import SiteData
+from apps.models.statuses import Statuses
 
 
 SERVER = "localhost"
@@ -59,7 +63,11 @@ SERVER = "localhost"
 # ----------------------------------------------------------------------------
 
 app = Flask(__name__)
-sess = Session()
+app.before_request(lambda: setattr(session, 'permanent', True))
+app.permanent_session_lifetime = datetime.timedelta(days=64)
+
+
+
 
 start_time = time.time()
 
@@ -69,18 +77,17 @@ start_time = time.time()
 def login_required(f):
     @wraps(f)
     def wrap():
-        if session['logged_in'] == True:
+        if 'logged_in' in session:
             return f()
         else:
             abort(404)
-
     return wrap
 
 
 @app.route('/', methods=['GET'])
 def index():
     sites = Sites(Wrapper()).get_all()
-    if session['logged_in'] == True:
+    if 'logged_in' in session:
         return redirect(url_for('main'))
     else:
         return render_template('index.html', sites=sites)
@@ -139,17 +146,32 @@ def add_new():
 
     sitemap_content = BeautifulSoup(sitemap.content)
     meta_description = page.find("meta", {"name": "description"})['content']
+    clear_url = url.replace("https://", "").strip("/")
+    ip = socket.gethostbyname(clear_url)
+
     meta_robots = "robots"
     # meta_title = page.find("meta", {"name": "title"})['content']
 
-    add_site_data = SiteData(Wrapper()).add_site_data({"site_id": add_new, "title": title, "h1": h1,
-                                                       "meta_description": meta_description,
-                                                       "meta_title": "meta_title",
-                                                       "meta_robots":"",
-                                                       "html": escape_string(str(html)),
-                                                       "response": response_code,
-                                                       "robots": robots_content,
-                                                       "sitemap": escape_string(str(sitemap_content))})
+    add_title = SiteData(Wrapper()).add_title({"site_id": add_new, "data": title, "type_id": "1",
+                                               "date": curdatetime})
+
+    add_h1 = SiteData(Wrapper()).add_h1({"site_id": add_new, "data": h1, "type_id": "2", "date": curdatetime})
+
+    add_response = SiteData(Wrapper()).add_response({"site_id": add_new, "data": response_code, "type_id": "3", "date": curdatetime})
+    add_robots = SiteData(Wrapper()).add_robots(
+        {"site_id": add_new, "data": robots_content, "type_id": "6", "date": curdatetime})
+
+    add_sitemap = SiteData(Wrapper()).add_sitemap(
+        {"site_id": add_new, "data": escape_string(str(sitemap_content)), "type_id": "7", "date": curdatetime})
+
+    add_html = SiteData(Wrapper()).add_html(
+        {"site_id": add_new, "data": escape_string(str(html)), "type_id": "8", "date": curdatetime})
+
+    add_ip = SiteData(Wrapper()).add_html(
+        {"site_id": add_new, "data": ip, "type_id": "9", "date": curdatetime})
+
+    add_description = SiteData(Wrapper()).add_html(
+        {"site_id": add_new, "data": meta_description, "type_id": "4", "date": curdatetime})
 
     if add_new == "-1":
         flash('Error.Try again')  # this message gets lost
@@ -184,16 +206,13 @@ def site():
     # from db
 
     sites_data = SiteData(Wrapper()).get_site_data(id)
+    statuses = Statuses(Wrapper()).get_status(id)
+    # return jsonify(statuses)
 
     return render_template('site.html',
                            site=site,
+                           statuses=statuses,
                            sites_data=sites_data)
-                           # title=title,
-                           # response=response,
-                           # h1=h1,
-                           # robots_content=robots_content,
-                           # meta_description=meta_description,
-                           # sitemap_content=sitemap_content)
 
 
 
@@ -205,55 +224,159 @@ def delete():
     return jsonify(delete)
 
 
+@app.route("/check-sites")
 def check_status():
-    id = "54"
-    site = Sites(Wrapper()).get_site(id)
-    url = site[0]['url']
 
-    #from db
+    curdatetime = time.strftime("%Y-%m-%d %H:%M:%S")
+    sites = Sites(Wrapper()).get_all()
+    for site in sites:
+        url = site['url']
+        id = site['id']
+        response = requests.get(url)
+        response_code = response.status_code
+        page = BeautifulSoup(response.content)
 
-    site_data = SiteData(Wrapper()).get_site_data(id)
-    response_code = site_data[0]['response']
-    sitemap = site_data[0]['robots']
-    html = site_data[0]['html']
-    title = site_data[0]['title']
-    h1 = site_data[0]['h1']
-    robots_content = site_data[0]['robots']
-    sitemap_content = site_data[0]['sitemap']
-    meta_description = site_data[0]['meta_description']
+        #check titles
+        title = SiteData(Wrapper()).get_sites_title(id)
+        current_title = page.title
+        if str(current_title) != title[0]['data']:
+            print "changed"
+            status = Statuses(Wrapper()).add_status({"site_id": id, "status_id": "2",
+                                                     "date": curdatetime, "type_id": "1",
+                                                     "data": "Current title %s" % current_title})
+        else:
+            print 'not changed'
 
+        # check h1
+        h1 = SiteData(Wrapper()).get_sites_h1(id)
+        current_h1 = page.find('h1')
+        # print str(h1[0]['data'])
+        # print str(current_h1)
+        if str(current_h1) != str(h1[0]['data']):
+            print 'changed'
+            status = Statuses(Wrapper()).add_status({"site_id": id, "status_id": "2",
+                                                     "date": curdatetime,"type_id": "2",
+                                                     "data": "Current h1 %s" % current_h1})
+        else:
+            print "not changed"
 
-    #current response
-    current_response = requests.get(url)
-    current_response_code = current_response.status_code
-    current_robots = requests.get(url + "/robots.txt")
-    current_sitemap = requests.get(url + "/sitemap.xml")
-    current_page = BeautifulSoup(current_response.content)
-    current_title = current_page.title
-    current_h1 = current_page.find('h1')
-    current_robots_content =  BeautifulSoup(current_robots.content)
-    current_sitemap_content = BeautifulSoup(current_sitemap.content)
-    current_meta_description = current_page.find("meta", {"name": "description"})['content']
+        # check get_sites_description
+        description = SiteData(Wrapper()).get_sites_description(id)
+        current_description = page.find("meta", {"name": "description"})['content']
+        # print str(description[0]['data'])
+        # print str(current_description)
+        if str(current_description) != str(description[0]['data']):
+            print 'changed'
+            status = Statuses(Wrapper()).add_status({"site_id": id, "status_id": "2",
+                                                     "date": curdatetime, "type_id": "4",
+                                                     "data": "Current description %s" %current_description})
+        else:
+            print "not changed"
 
-    if str(response_code) != str(current_response_code):
-        send_mail("response code not the same")
-    else:
-        send_mail("response code  the same")
-    return True
+        # check get_sites_robots
+        # robots = SiteData(Wrapper()).get_sites_robots(id)
+        # current_robots = requests.get(url + "/robots.txt")
+        # current_robots_content = BeautifulSoup(current_robots.content)
+        # if str(current_robots_content) != str(robots[0]['data']):
+        #     print 'changed'
+        #     # status = Statuses(Wrapper()).add_status({"site_id": id, "status_id": "2",
+        #     #                                          "date": curdatetime, "type_id": "5",
+        #     #                                          "data": "Current robots changed"})
+        # else:
+        #     print "not changed"
+
+        # check get_sites_sitemap
+        sitemap = SiteData(Wrapper()).get_sites_sitemap(id)
+        current_sitemap = requests.get(url + "/sitemap.xml")
+        current_sitemap_content = BeautifulSoup(current_sitemap.content)
+        if str(current_sitemap_content) != str(sitemap[0]['data']):
+            print 'changed'
+            status = Statuses(Wrapper()).add_status({"site_id": id, "status_id": "2",
+                                                     "date": curdatetime, "type_id": "7",
+                                                     "data": "Current sitemap changed"})
+        else:
+            print "not changed"
+
+        # check get_sites_html
+        html = SiteData(Wrapper()).get_sites_html(id)
+        page = BeautifulSoup(response.content)
+        current_html = page.prettify()
+
+        if str(current_html) != str(html[0]['data']):
+            print 'changed'
+            status = Statuses(Wrapper()).add_status({"site_id": id, "status_id": "2",
+                                                     "date": curdatetime, "type_id": "8",
+                                                     "data": "Current sitemap changed"})
+        else:
+            print "not changed"
+
+        # check ip
+        ip = SiteData(Wrapper()).get_sites_ip(id)
+        clear_url = url.replace("https://", "").strip("/")
+        current_ip = socket.gethostbyname(clear_url)
+
+        if str(current_ip) != str(ip):
+            print 'changed'
+            status = Statuses(Wrapper()).add_status({"site_id": id, "status_id": "2",
+                                                     "date": curdatetime, "type_id": "8",
+                                                     "data": "Current sitemap changed"})
+        else:
+            print "not changed"
+
+    return "Check done"
+
+    # #from db
+    #
+    # site_data = SiteData(Wrapper()).get_site_data(id)
+    # response_code = site_data[0]['response']
+    # sitemap = site_data[0]['robots']
+    # html = site_data[0]['html']
+    # title = site_data[0]['title']
+    # h1 = site_data[0]['h1']
+    # robots_content = site_data[0]['robots']
+    # sitemap_content = site_data[0]['sitemap']
+    # meta_description = site_data[0]['meta_description']
+    #
+    #
+    # #current response
+    # current_response = requests.get(url)
+    # current_response_code = current_response.status_code
+    # current_robots = requests.get(url + "/robots.txt")
+    # current_sitemap = requests.get(url + "/sitemap.xml")
+    # current_page = BeautifulSoup(current_response.content)
+    # current_title = current_page.title
+    # current_h1 = current_page.find('h1')
+    # current_robots_content =  BeautifulSoup(current_robots.content)
+    # current_sitemap_content = BeautifulSoup(current_sitemap.content)
+    # current_meta_description = current_page.find("meta", {"name": "description"})['content']
+    #
+    # if str(response_code) != str(current_response_code):
+    #     send_mail("response code not the same")
+    # else:
+    #     send_mail("response code  the same")
+    # return True
 
 
 def check_status_code():
-    id = "54"
-    site = Sites(Wrapper()).get_site(id)
-    url = site[0]['url']
-    site_data = SiteData(Wrapper()).get_site_data(id)
-    response_code = site_data[0]['response']
-    current_response = requests.get(url)
-    current_response_code = current_response.status_code
-    if str(response_code) != str(current_response_code):
-        send_mail("response code not the same")
-    else:
-        send_mail("response code  the same")
+    curdatetime = time.strftime("%Y-%m-%d %H:%M:%S")
+    sites = Sites(Wrapper()).get_all()
+    for site in sites:
+        url = site['url']
+        id = site['id']
+        response = requests.get(url)
+        page = BeautifulSoup(response.content)
+        # check response
+        response_code = SiteData(Wrapper()).get_sites_response(id)
+        current_response = requests.get(url)
+        current_response_code = current_response.status_code
+        if (str(current_response_code) != str(response_code[0]['data'])):
+            print 'changed'
+            send_mail("response code not the same")
+            current_response = Statuses(Wrapper()).add_status({"site_id": id, "status_id": "2",
+                                                               "date": curdatetime, "type_id": "3",
+                                                               "data": "Current response %s" % current_response_code})
+        else:
+            print "not changed"
     return True
 
 
@@ -268,11 +391,20 @@ def send_mail(text):
     return '1'
 
 
+@app.route('/test')
+def test():
+    ip = socket.gethostbyname('psychology-essays.com')
+    return ip
+
 
 if __name__ == "__main__":
     app.secret_key = 'super secret key'
     app.config['SESSION_TYPE'] = 'filesystem'
-    sess.init_app(app)
+    scheduler = BackgroundScheduler()
+    # in your case you could change seconds to hours
+    scheduler.add_job(check_status, trigger='interval', days=1)
+    scheduler.add_job(check_status_code, trigger='interval', minutes=5)
+    scheduler.start()
     app.run(debug=True)
 else:
     logging.basicConfig(debug=True, threaded=True,

@@ -47,6 +47,8 @@
         <div class="row">
             <div class="col-md-12">
                 <h3>All sites</h3>
+
+
                 <table class="table table-striped">
                     <thead>
                       <tr>
@@ -56,50 +58,19 @@
                       </tr>
                     </thead>
                     <tbody>
-
+                    {% for site_data in sites_data %}
                       <tr>
-                        <td><strong>Site url</strong></td>
-                        <td>{{ site[0]['url'] }}</td>
-                      <td>Nothing changed</td>
+                            <td><strong>{{ site_data['type'] }}</strong></td>
+                            <td><pre><code>{{ site_data['data'] }}</code></pre></td>
+                            <td>
+                                {%for status in statuses %}
+                                    {%  if site_data['type_id'] == status['type_id'] %}
+                                        {{status['data']}}
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
                       </tr>
-                      <tr>
-                            <td><strong>title</strong></td>
-                            <td>{{sites_data[0]['title']}}</td>
-                            <td>Nothing changed</td>
-                      </tr>
-                      <tr>
-                        <td><strong>site response</strong></td>
-                        <td>{{sites_data[0]['response']}}</td>
-                          <td>Nothing changed</td>
-                      </tr>
-                       <tr>
-                            <td><strong>Meta description</strong></td>
-                            <td>{{sites_data[0]['meta_description']}}</td>
-                            <td>Nothing changed</td>
-                      </tr>
-
-                     <tr>
-                         <td><strong>h1</strong></td>
-                        <td>{{sites_data[0]['h1']}}</td>
-                         <td>Nothing changed</td>
-                      </tr>
-
-                    <tr>
-                        <td><strong>robots</strong></td>
-                        <td><pre><code>{{sites_data[0]['robots']}}</code></pre></td>
-                        <td>Nothing changed</td>
-                      </tr>
-                    <tr>
-                        <td><strong>sitemap</strong></td>
-                        <td><pre><code>{{sites_data[0]['sitemap']}}</code></pre></td>
-                        <td>Nothing changed</td>
-                    </tr>
-
-                    <tr>
-                        <td><strong>html</strong></td>
-                        <td><pre><code>{{sites_data[0]['html']}}</code></pre></td>
-                        <td>Nothing changed</td>
-                    </tr>
+                    {% endfor %}
                     </tbody>
                   </table>
             </div>
