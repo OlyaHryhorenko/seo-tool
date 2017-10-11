@@ -1,53 +1,24 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import datetime
-import hashlib
-import json
+
 import logging
-import os
-import random
+
 import time
-import pytz
-import glob
-import schedule
-import string
+
 import requests
 import socket
-from pytz import timezone
-from email.mime.text import MIMEText
-from email.MIMEMultipart import MIMEMultipart
-from email.MIMEBase import MIMEBase
-from email import Encoders
-from threading import Thread
+
 from functools import wraps
 from smtplib import SMTP_SSL, SMTP
-from time import gmtime, strftime
+
 from MySQLdb import escape_string
 
-import magic
-import urllib2
-
-import pygeoip
 from BeautifulSoup import BeautifulSoup
 from flask import (Flask, Response, abort, jsonify, redirect, flash, render_template,
                    request, send_file, session, url_for, Markup, make_response)
-from flask_mail import Mail, Message
 
-import StringIO
-from selenium import webdriver
-from PIL import Image
-import xml2json
-import smtplib
-import urllib
-from werkzeug import secure_filename
-from random import randint
 from apscheduler.schedulers.background import BackgroundScheduler
-
-from flask.ext.assets import Environment, Bundle
-from flask.ext.cache import Cache
-
-
-
 from apps.models.wrapper import Wrapper
 from apps.models.users import Users
 from apps.models.sites import Sites
@@ -55,23 +26,16 @@ from apps.models.site_data import SiteData
 from apps.models.statuses import Statuses
 
 
-SERVER = "localhost"
-
 
 # Log config
 # logging.basicConfig(filename=LOG_FILE, level=logging.DEBUG)
 # ----------------------------------------------------------------------------
 
 app = Flask(__name__)
-app.before_request(lambda: setattr(session, 'permanent', True))
-app.permanent_session_lifetime = datetime.timedelta(days=64)
-
-
+app.secret_key = 'super secret key'
 
 
 start_time = time.time()
-
-
 
 
 def login_required(f):
@@ -241,6 +205,7 @@ def check_status():
         current_title = page.title
         if str(current_title) != title[0]['data']:
             print "changed"
+            send_mail("Current title changed")
             status = Statuses(Wrapper()).add_status({"site_id": id, "status_id": "2",
                                                      "date": curdatetime, "type_id": "1",
                                                      "data": "Current title %s" % current_title})
@@ -254,6 +219,7 @@ def check_status():
         # print str(current_h1)
         if str(current_h1) != str(h1[0]['data']):
             print 'changed'
+            send_mail("Current h1 changed")
             status = Statuses(Wrapper()).add_status({"site_id": id, "status_id": "2",
                                                      "date": curdatetime,"type_id": "2",
                                                      "data": "Current h1 %s" % current_h1})
@@ -291,6 +257,7 @@ def check_status():
         current_sitemap_content = BeautifulSoup(current_sitemap.content)
         if str(current_sitemap_content) != str(sitemap[0]['data']):
             print 'changed'
+            send_mail("Current sitemap changed")
             status = Statuses(Wrapper()).add_status({"site_id": id, "status_id": "2",
                                                      "date": curdatetime, "type_id": "7",
                                                      "data": "Current sitemap changed"})
@@ -304,9 +271,10 @@ def check_status():
 
         if str(current_html) != str(html[0]['data']):
             print 'changed'
+            send_mail("Current html changed")
             status = Statuses(Wrapper()).add_status({"site_id": id, "status_id": "2",
                                                      "date": curdatetime, "type_id": "8",
-                                                     "data": "Current sitemap changed"})
+                                                     "data": "Current html changed"})
         else:
             print "not changed"
 
@@ -317,9 +285,10 @@ def check_status():
 
         if str(current_ip) != str(ip):
             print 'changed'
+            send_mail("Current ip changed")
             status = Statuses(Wrapper()).add_status({"site_id": id, "status_id": "2",
                                                      "date": curdatetime, "type_id": "8",
-                                                     "data": "Current sitemap changed"})
+                                                     "data": "Current ip changed"})
         else:
             print "not changed"
 
@@ -398,10 +367,7 @@ def test():
 
 
 if __name__ == "__main__":
-    app.secret_key = 'super secret key'
-    app.config['SESSION_TYPE'] = 'filesystem'
     scheduler = BackgroundScheduler()
-    # in your case you could change seconds to hours
     scheduler.add_job(check_status, trigger='interval', days=1)
     scheduler.add_job(check_status_code, trigger='interval', minutes=5)
     scheduler.start()
