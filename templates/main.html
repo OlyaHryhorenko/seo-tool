@@ -14,6 +14,19 @@
   crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <script>
+        function check_status(){
+    var item = $(this);
+    var id = item.getAttribute('data-id');
+    $.ajax({
+            url: '/get-status?id='+id,
+            success: function(response){
+                console.log(response);
+                $(this).html(response);
+            }
+        })
+  }
+    </script>
 </head>
 <body>
 <header>
@@ -23,11 +36,14 @@
                 <span class="navbar-toggler-icon"></span>
               </button>
           <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-            <a class="navbar-brand" href="#">Bryteq</a>
+            <a class="navbar-brand" href="/">Bryteq</a>
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
               <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
               </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="/settings">Settings</a>
+                </li>
 
             </ul>
             <a class="btn btn-outline-success search-btn" href="/logout">Logout</a>
@@ -43,9 +59,9 @@
                 <p>Hello, {{user[0]['login']}}</p>
             </div>
             <div class="row">
-                <form class="form-inline my-2 my-lg-0 col-md-12" method="POST" action="/add_new">
+                <form class="form-inline my-2 my-lg-0 col-md-12" method="POST" action="/add_new" style="padding: 0;">
                     <input type="text" name="url" class="form-control mr-sm-2 col-md-9" placeholder="Enter url to monitor">
-                    <input type="submit" class="btn btn-outline-success add-btn col-md-2">
+                    <input type="submit" class="btn btn-outline-success add-btn ">
                 </form>
             </div>
         </div>
@@ -57,8 +73,20 @@
                     <ul>
                         {% for site in sites %}
                         <li>
-                            <a href="/site?id={{site.id}}" target="_blank">{{ site.url }}</a>
+                            <a>{{ site.url }}</a>
+                            <span class="check_status" data-id="{{ site.id }}">
+                            0
+                                {% for status in statuses %}
+                                    {% if status.site_id == site.id %}
+                                        {% if status.id != 0 %}
+                                            win
+                                        {% endif%}
+                                    {% endif %}
+                                {% endfor %}
+                            </span>
                             <a class="delete-item" href="/site-delete?id={{site.id}}"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                            <a href="/site-statistic?id={{site.id}}" class="details">Changes statistics</a>
+                            <a href="/site?id={{site.id}}" target="_blank" class="details">See basic data</a>
                         </li>
                         {% endfor%}
                     </ul>
@@ -68,5 +96,10 @@
      </section>
 </main>
 <script src="/static/js.js"></script>
+<footer>
+        <div class="container">
+            <p>© 2017 Bryteq</p>
+        </div>
+</footer>
 </body>
  </html>

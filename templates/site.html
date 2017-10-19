@@ -14,7 +14,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 </head>
-<body>
+<body class="inner inner-black">
 <header>
    <div class="container">
        <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
@@ -29,10 +29,7 @@
               </li>
 
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-              <input class="form-control mr-sm-2" type="text" placeholder="Search">
-              <button class="btn btn-outline-success search-btn" type="submit">Search</button>
-            </form>
+             <a class="btn btn-outline-success search-btn" href="/logout">Logout</a>
           </div>
         </nav>
    </div>
@@ -45,16 +42,19 @@
             </div>
         </div>
         <div class="row">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="/main">Main</a></li>
+              <li class="breadcrumb-item active">Site Statistic</li>
+            </ol>
+        </div>
+        <div class="row">
             <div class="col-md-12">
-                <h3>All sites</h3>
-
-
+                <h3><a target="_blank" href="{{site[0]['url']}}">{{site[0]['url']}}</a></h3>
                 <table class="table table-striped">
                     <thead>
                       <tr>
                         <th>Type</th>
                         <th>Saved data</th>
-                       <th>Status</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -62,13 +62,6 @@
                       <tr>
                             <td><strong>{{ site_data['type'] }}</strong></td>
                             <td><pre><code>{{ site_data['data'] }}</code></pre></td>
-                            <td>
-                                {%for status in statuses %}
-                                    {%  if site_data['type_id'] == status['type_id'] %}
-                                        {{status['data']}}
-                                    {% endif %}
-                                {% endfor %}
-                            </td>
                       </tr>
                     {% endfor %}
                     </tbody>
@@ -77,6 +70,11 @@
         </div>
     </div>
 </main>
-
+<script src="/static/js.js"></script>
+<footer>
+        <div class="container">
+            <p>© 2017 Bryteq</p>
+        </div>
+</footer>
 </body>
 </html>

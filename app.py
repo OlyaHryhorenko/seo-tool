@@ -7,6 +7,7 @@ import logging
 import time
 
 import requests
+import atexit
 import socket
 
 from functools import wraps
@@ -15,10 +16,11 @@ from smtplib import SMTP_SSL, SMTP
 from MySQLdb import escape_string
 
 from BeautifulSoup import BeautifulSoup
+
 from flask import (Flask, Response, abort, jsonify, redirect, flash, render_template,
                    request, send_file, session, url_for, Markup, make_response)
 
-from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.scheduler import Scheduler
 from apps.models.wrapper import Wrapper
 from apps.models.users import Users
 from apps.models.sites import Sites
@@ -32,10 +34,25 @@ from apps.models.statuses import Statuses
 # ----------------------------------------------------------------------------
 
 app = Flask(__name__)
-app.secret_key = 'super secret key'
 
-
+app.secret_key = 'sss'
+app.permanent_session_lifetime = datetime.timedelta(days=64)
+sched = Scheduler()
+sched.start()
+site_mail = 'o.grigorenko@bryteq.com'
+logging.basicConfig()
 start_time = time.time()
+
+
+def job_function():
+    print "Hello World"
+
+
+@app.route('/set/')
+def set():
+    session['logged_in'] = False
+    session['id'] = None
+    return 'ok'
 
 
 def login_required(f):
@@ -50,12 +67,9 @@ def login_required(f):
 
 @app.route('/', methods=['GET'])
 def index():
-    sites = Sites(Wrapper()).get_all()
-    if 'logged_in' in session:
-        return redirect(url_for('main'))
-    else:
-        return render_template('index.html', sites=sites)
-
+    if bool(session) == False:
+        return render_template('index.html')
+    return redirect(url_for('main'))
 
 
 @app.route('/login', methods=['POST'])
@@ -64,7 +78,7 @@ def login():
     password = request.form.get('password')
     log_in = Users().login({'login': login, 'password': password})
     if log_in == False:
-        flash('This message gets lost')  # this message gets lost
+        flash('There is no user with such credential. Try again')  # this message gets lost
         return redirect(url_for('index'))
     user_id = Users().get_user_id(login)
     session['id'] = user_id[0].get('id')
@@ -84,9 +98,37 @@ def logout():
 def main():
     user = Users().get_user(session['id'])
     sites = Sites(Wrapper()).get_all_for_user(session['id'])
+    statuses = Statuses(Wrapper()).get_status_for_all()
     return render_template('main.html',
                            user=user,
+                           statuses=statuses,
                            sites=sites)
+
+
+@app.route('/get-status', methods=['GET'])
+def check_status_by_id():
+    id = request.args.get('id')
+    status = Statuses(Wrapper()).get_status(id)
+
+    return jsonify(len(status))
+
+
+@app.route('/settings')
+@login_required
+def settings():
+    user = Users().get_user(session['id'])
+    print user
+    return render_template('settings.html', user=user)
+
+
+@app.route('/update-setting', methods=['POST'])
+@login_required
+def update_settings():
+    login = request.form.get('login')
+    email = request.form.get('email')
+    user = Users().edit_user({"login": login, "email": email}, session['id'])
+    flash("Changes saved")
+    return redirect(url_for('settings'))
 
 
 @app.route('/add_new', methods=['POST'])
@@ -179,6 +221,14 @@ def site():
                            sites_data=sites_data)
 
 
+@app.route('/site-statistic', methods=['GET'])
+def site_statistic():
+    id = request.args.get('id')
+    site = Sites(Wrapper()).get_site(id)
+    statuses = Statuses(Wrapper()).get_status(id)
+    return render_template('statistic.html', statuses=statuses,
+                           site=site)
+
 
 @app.route("/site-delete")
 def delete():
@@ -190,7 +240,6 @@ def delete():
 
 @app.route("/check-sites")
 def check_status():
-
     curdatetime = time.strftime("%Y-%m-%d %H:%M:%S")
     sites = Sites(Wrapper()).get_all()
     for site in sites:
@@ -203,9 +252,10 @@ def check_status():
         #check titles
         title = SiteData(Wrapper()).get_sites_title(id)
         current_title = page.title
+        print title[0]['data']
         if str(current_title) != title[0]['data']:
             print "changed"
-            send_mail("Current title changed")
+            send_mail("Current title changed on {0} on {1}".format(current_title, url))
             status = Statuses(Wrapper()).add_status({"site_id": id, "status_id": "2",
                                                      "date": curdatetime, "type_id": "1",
                                                      "data": "Current title %s" % current_title})
@@ -219,7 +269,7 @@ def check_status():
         # print str(current_h1)
         if str(current_h1) != str(h1[0]['data']):
             print 'changed'
-            send_mail("Current h1 changed")
+            send_mail("Current h1 %s" % current_h1)
             status = Statuses(Wrapper()).add_status({"site_id": id, "status_id": "2",
                                                      "date": curdatetime,"type_id": "2",
                                                      "data": "Current h1 %s" % current_h1})
@@ -233,23 +283,13 @@ def check_status():
         # print str(current_description)
         if str(current_description) != str(description[0]['data']):
             print 'changed'
+            send_mail("Current description is {0} on {1}".format(current_description, url))
             status = Statuses(Wrapper()).add_status({"site_id": id, "status_id": "2",
                                                      "date": curdatetime, "type_id": "4",
-                                                     "data": "Current description %s" %current_description})
+                                                     "data": "Current description %s" % current_description})
         else:
             print "not changed"
 
-        # check get_sites_robots
-        # robots = SiteData(Wrapper()).get_sites_robots(id)
-        # current_robots = requests.get(url + "/robots.txt")
-        # current_robots_content = BeautifulSoup(current_robots.content)
-        # if str(current_robots_content) != str(robots[0]['data']):
-        #     print 'changed'
-        #     # status = Statuses(Wrapper()).add_status({"site_id": id, "status_id": "2",
-        #     #                                          "date": curdatetime, "type_id": "5",
-        #     #                                          "data": "Current robots changed"})
-        # else:
-        #     print "not changed"
 
         # check get_sites_sitemap
         sitemap = SiteData(Wrapper()).get_sites_sitemap(id)
@@ -257,7 +297,7 @@ def check_status():
         current_sitemap_content = BeautifulSoup(current_sitemap.content)
         if str(current_sitemap_content) != str(sitemap[0]['data']):
             print 'changed'
-            send_mail("Current sitemap changed")
+            send_mail("Current sitemap changed on {0}".format(url))
             status = Statuses(Wrapper()).add_status({"site_id": id, "status_id": "2",
                                                      "date": curdatetime, "type_id": "7",
                                                      "data": "Current sitemap changed"})
@@ -271,7 +311,7 @@ def check_status():
 
         if str(current_html) != str(html[0]['data']):
             print 'changed'
-            send_mail("Current html changed")
+            send_mail("Current html changed on %s" % url)
             status = Statuses(Wrapper()).add_status({"site_id": id, "status_id": "2",
                                                      "date": curdatetime, "type_id": "8",
                                                      "data": "Current html changed"})
@@ -282,16 +322,15 @@ def check_status():
         ip = SiteData(Wrapper()).get_sites_ip(id)
         clear_url = url.replace("https://", "").strip("/")
         current_ip = socket.gethostbyname(clear_url)
-
-        if str(current_ip) != str(ip):
+        if str(current_ip) != str(ip[0]['data']):
             print 'changed'
-            send_mail("Current ip changed")
+            send_mail("Current ip changed on %s" % url)
             status = Statuses(Wrapper()).add_status({"site_id": id, "status_id": "2",
                                                      "date": curdatetime, "type_id": "8",
-                                                     "data": "Current ip changed"})
+                                                     "data": "Current ip changed for %s" % current_ip})
         else:
             print "not changed"
-
+    send_mail('Everyday check was done successfully {0}'.format(curdatetime))
     return "Check done"
 
     # #from db
@@ -338,9 +377,9 @@ def check_status_code():
         response_code = SiteData(Wrapper()).get_sites_response(id)
         current_response = requests.get(url)
         current_response_code = current_response.status_code
-        if (str(current_response_code) != str(response_code[0]['data'])):
+        if str(current_response_code) != str(response_code[0]['data']):
             print 'changed'
-            send_mail("response code not the same")
+            send_mail("Response code on {0} not the same. It is {1}".format(url, current_response_code))
             current_response = Statuses(Wrapper()).add_status({"site_id": id, "status_id": "2",
                                                                "date": curdatetime, "type_id": "3",
                                                                "data": "Current response %s" % current_response_code})
@@ -348,13 +387,13 @@ def check_status_code():
             print "not changed"
     return True
 
-
-def send_mail(text):
-    msg = text
+@sched.cron_schedule(second=30)
+def send_mail():
+    msg = "test"
     smtp = SMTP()
     smtp.connect("mbxsrv.com")
     smtp.login("o.grigorenko@bryteq.com", "GueUhmXg")
-    smtp.sendmail("olhahryhorencko@gmail.com", "olhahryhorencko@gmail.com", msg)
+    smtp.sendmail("noreply@bryteq.com", "olhahryhorencko@gmail.com", msg)
     # ##logging.info("from_address = {0}".format(from_address))
     smtp.quit()
     return '1'
@@ -362,15 +401,24 @@ def send_mail(text):
 
 @app.route('/test')
 def test():
-    ip = socket.gethostbyname('psychology-essays.com')
-    return ip
+    msg = "test"
+    smtp = SMTP()
+    smtp.connect("mbxsrv.com")
+    smtp.login("o.grigorenko@bryteq.com", "GueUhmXg")
+    smtp.sendmail("noreply@bryteq.com", "olhahryhorencko@gmail.com", msg)
+    smtp.quit()
+    return '1'
 
 
 if __name__ == "__main__":
-    scheduler = BackgroundScheduler()
-    scheduler.add_job(check_status, trigger='interval', days=1)
-    scheduler.add_job(check_status_code, trigger='interval', minutes=5)
-    scheduler.start()
+    # scheduler = BackgroundScheduler()
+    # scheduler.add_job(check_status, trigger='interval',  days=1)
+    # scheduler.add_job(check_status_code, trigger='interval', minutes=1)
+    # scheduler.add_job(test, trigger=IntervalTrigger(seconds=3))
+    # scheduler.start()
+    app.secret_key = 'super secret key'
+    sched.add_cron_job(job_function,  minute=1)
+    app.config['SESSION_TYPE'] = 'filesystem'
     app.run(debug=True)
 else:
     logging.basicConfig(debug=True, threaded=True,

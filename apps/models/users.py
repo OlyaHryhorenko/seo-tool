@@ -48,6 +48,8 @@ class Users(object):
         """
         return self.w.select("id", self.db_name, "where login='{0}'".format(uname))
 
+    def edit_user(self, fields, id):
+        return self.w.update(fields, [self.db_name], "where id='{0}'".format(id))
 
     def login(self, credendials):
         """ Login user """

@@ -16,7 +16,7 @@ class Sites(object):
         return self.w.select(["*"], [self.db_name])
 
     def get_all_for_user(self, id):
-        return self.w.select(["*"], [self.db_name], "where user_id=%s" % id)
+        return self.w.select(["*"], [self.db_name], "where user_id=%s order by date DESC" % id)
 
     def add_site(self, fields):
         return self.w.insert(fields, self.NAME)

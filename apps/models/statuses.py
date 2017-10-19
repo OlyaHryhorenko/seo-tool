@@ -19,7 +19,12 @@ class Statuses(object):
         return self.w.insert(fields, self.NAME)
 
     def get_status(self, id):
-        return self.w.select(["*"], [self.db_name], "where site_id=%s" % id)
+        return self.w.select({"data", "date", "type_id", "type", "status_id"}, [self.db_name],
+                             "INNER JOIN types on site_status.type_id = types.id where site_id=%s" % id)
+
+    def get_status_for_all(self):
+        return self.w.select({"data", "date", "type_id", "type", "status_id", "site_id", 'site_status.id'}, [self.db_name],
+                             "INNER JOIN types on site_status.type_id = types.id")
 
     def edit_status(self, fields, condition):
         return self.w.update(fields, self.NAME, condition)

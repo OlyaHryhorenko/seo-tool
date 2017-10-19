@@ -2,13 +2,31 @@ header {
     background-color: #474e5d;
     color: #fff;
 }
-
+a {
+    color: #1abc9c;
+}
+a:hover {
+        text-decoration: none;
+    color: rgba(26, 188, 156, 0.63);
+}
+body.inner header {
+    border-bottom: 1px solid;
+}
+body.inner-black {
+    background-color: #474e5d;
+}
 section.banner {
     background: #1abc9c;
     width: 100%;
     color: #fff;
     text-align: center;
-    padding: 10%;
+    padding: 6%;
+}
+footer {
+background-color: #474e5d;
+    color: #fff;
+    text-align: center;
+    padding: 29px 0;
 }
 .navbar {
     background: transparent
@@ -30,7 +48,7 @@ a.navbar-brand {
     color:#fff!important;
 }
 
-.navbar-nav li:honer a {
+.navbar-nav li:hover a {
     color: #1abc9c;
 }
 
@@ -88,12 +106,14 @@ section.main-body ul li {
      box-shadow: 1px 1px 1px rgba(204, 204, 204, 0.52);
 }
 section.main-body ul li:hover {
-    background: #ccc;
+    background: rgba(204, 204, 204, 0.48);
 }
 .add-btn{
     background:#474e5d;
     color: #fff;
     border-color: #474e5d;
+        display: block;
+    width: 24%;
 }
 section.main-body ul li a {
     color: #474e5d;
@@ -110,14 +130,36 @@ main.site {
     padding-top: 70px;
      background-color: #474e5d;
      color: #fff;
+
 }
 
 .delete-item {
     float: right;
+    padding-left: 10px;
+    color: #1abc9c!important;
+}
+.details {
+    text-align: right;
+    float: right;
+    color: #1abc9c!important;
+    padding-right: 10px;
+    text-decoration: underline!important;
+    padding-left: 10px;
+    border-right: 1px solid;
+    text-decoration-color: #1abc9c!important;
 }
 
 .delete-item:hover {
     color: red;
+}
+.breadcrumb {
+    background: transparent;
+}
+.breadcrumb-item.active {
+color: #fff;
+}
+.breadcrumb-item a {
+    color:#1abc9c;
 }
 
 pre {

@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SEO-check by Bryteq</title>
+    <title>Settings - SEO-check by Bryteq</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/css/tether.min.css" />
+   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
      <link rel="stylesheet" href="/static/style.css" />
     <script
   src="https://code.jquery.com/jquery-2.2.4.min.js"
@@ -22,65 +23,61 @@
                 <span class="navbar-toggler-icon"></span>
               </button>
           <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-            <a class="navbar-brand" href="#">Bryteq</a>
+            <a class="navbar-brand" href="/">Bryteq</a>
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
               <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
               </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="/settings">Settings</a>
+                </li>
 
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-              <input class="form-control mr-sm-2" type="text" placeholder="Search">
-              <button class="btn btn-outline-success search-btn" type="submit">Search</button>
-            </form>
+            <a class="btn btn-outline-success search-btn" href="/logout">Logout</a>
           </div>
         </nav>
    </div>
 </header>
-<main>
-    <section class="banner">
+<body>
+<section class="main-header">
         <div class="container">
             <div class="row">
-                <div class="col-md-12">
-                    <h1>SEO tool to monitor sites</h1>
-                </div>
+                <h1>Settings</h1>
+                <p>Change information</p>
             </div>
         </div>
     </section>
 
-    <section class="sites">
-        <div class="container">
-            {{session}}
-            {% with messages = get_flashed_messages() %}
-            <div class="row">
-                  {% if messages %}
-                    <div class="alert alert-danger" style="width: 50%; margin: 13px auto;">
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+
+            <form action="/update-setting" method="POST" style="margin-top: 50px;">
+                {% with messages = get_flashed_messages() %}
+                             {% if messages %}
+                    <div class="alert alert-success" style="width: 100%; margin: 13px auto;">
                         {% for message in messages %}
                             {{ message }}<br>
                         {% endfor %}
                     </div>
                   {% endif %}
-            </div>
             {% endwith %}
-            <div class="row">
-                <form method="POST" action="/login" style="margin: 0 auto;    width: 50%;">
-                    <h3>Sign in</h3>
-                    <div class="form-group">
-                        <label>Login: </label>
-                        <input name="login" class="form-control" type="text">
-                    </div>
-                     <div class="form-group">
-                        <label>Password: </label>
-                         <input name="password" class="form-control" type="password">
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" class="btn btn-default search-btn" value="Sign in">
-                    </div>
-                </form>
-            </div>
+              <div class="form-group">
+                <label>Login</label>
+                <input type="text" class="form-control" name="login" value="{{user[0]['login']}}">
+              </div>
+              <div class="form-group">
+                <label>Email</label>
+                <input type="email" class="form-control" name="email" value="{{user[0]['email']}}">
+              </div>
+                <div class="form-group">
+                    <input type="submit" value="Update" class="btn btn-outline-success search-btn">
+                </div>
+            </form>
         </div>
-    </section>
-</main>
+    </div>
+</div>
+<script src="/static/js.js"></script>
 <footer>
         <div class="container">
             <p>© 2017 Bryteq</p>
