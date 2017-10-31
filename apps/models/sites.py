@@ -24,6 +24,7 @@ class Sites(object):
     def get_site(self, id):
         return self.w.select(["*"], [self.db_name], "where id=%s" % id)
 
+
     def edit_site(self, fields, condition):
         return self.w.update(fields, self.NAME, condition)
 

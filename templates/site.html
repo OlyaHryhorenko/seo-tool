@@ -38,7 +38,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1>Site data manager</h1>
+                <h1><a target="_blank" href="{{site[0]['url']}}">{{site[0]['url']}}</a></h1>
             </div>
         </div>
         <div class="row">
@@ -49,23 +49,62 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <h3><a target="_blank" href="{{site[0]['url']}}">{{site[0]['url']}}</a></h3>
-                <table class="table table-striped">
-                    <thead>
-                      <tr>
-                        <th>Type</th>
-                        <th>Saved data</th>
-                      </tr>
-                    </thead>
-                    <tbody>
+
+                <div class="block">
+                    <h4>Title</h4>
                     {% for site_data in sites_data %}
-                      <tr>
-                            <td><strong>{{ site_data['type'] }}</strong></td>
-                            <td><pre><code>{{ site_data['data'] }}</code></pre></td>
-                      </tr>
+                    <p><span>{{site_data['date']}}</span>  -  {{site_data['title']}}</p>
                     {% endfor %}
-                    </tbody>
-                  </table>
+                </div>
+                <div class="block">
+                    <h4>H1</h4>
+                    {% for site_data in sites_data %}
+                    <p><span>{{site_data['date']}}</span>  -  {{site_data['h1']}}</p>
+                    {% endfor %}
+                </div>
+
+                <div class="block">
+                    <h4>Response code</h4>
+                    {% for site_data in sites_data %}
+                    <p><span>{{site_data['date']}}</span>  -  {{site_data['response_code']}}</p>
+                    {% endfor %}
+                </div>
+
+                <div class="block">
+                    <h4>Meta description</h4>
+                    {% for site_data in sites_data %}
+                    <p><span>{{site_data['date']}}</span>  -  {{site_data['meta_description']}}</p>
+                    {% endfor %}
+                </div>
+
+                <div class="block">
+                    <h4>Meta robots</h4>
+                    {% for site_data in sites_data %}
+                    <p><span>{{site_data['date']}}</span>  -  {{site_data['meta_robots']}}</p>
+                    {% endfor %}
+                </div>
+
+                <div class="block">
+                    <h4>Sitemap</h4>
+                    {% for site_data in sites_data %}
+                    <p><span>{{site_data['date']}}</span>  - <a target="_blank" href="/get-sitemap?id={{site_data['id']}}">sitemap</a> </p>
+                    {% endfor %}
+                </div>
+
+                <div class="block">
+                    <h4>HTML</h4>
+                    {% for site_data in sites_data %}
+                    <p><span>{{site_data['date']}}</span>  -  <a target="_blank" href="/get-html?id={{site_data['id']}}">html</a> </p>
+                    {% endfor %}
+                </div>
+
+                <div class="block">
+                    <h4>IP</h4>
+                    {% for site_data in sites_data %}
+                    <p><span>{{site_data['date']}}</span>  -  {{site_data['ip']}}</p>
+                    {% endfor %}
+                </div>
+
             </div>
         </div>
     </div>

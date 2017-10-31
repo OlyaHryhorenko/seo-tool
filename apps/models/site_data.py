@@ -46,8 +46,12 @@ class SiteData(object):
         return self.w.insert(fields, self.NAME)
 
     def get_site_data(self, id):
-        return self.w.select({"data", "date", "type_id", "type"}, [self.db_name],
-                             "INNER JOIN types on site_data.type_id = types.id where site_id=%s" % id)
+        return self.w.select({"*"}, [self.db_name],
+                             "where site_id=%s" % id)
+
+    def get_site_data_by_id(self, id):
+        return self.w.select({"*"}, [self.db_name],
+                             "where id=%s" % id)
 
     def get_sites_title(self, id):
         return self.w.select({"data"}, [self.db_name],
@@ -69,13 +73,13 @@ class SiteData(object):
         return self.w.select({"data"}, [self.db_name],
                              "where type_id=5 and site_id=%s" % id)
 
-    def get_sites_sitemap(self, id):
-        return self.w.select({"data"}, [self.db_name],
-                             "where type_id=7 and site_id=%s" % id)
+    def get_site_sitemap(self, id):
+        return self.w.select({"sitemap"}, [self.db_name],
+                             "where id=%s" % id)
 
-    def get_sites_html(self, id):
-        return self.w.select({"data"}, [self.db_name],
-                             "where type_id=8 and site_id=%s" % id)
+    def get_site_html(self, id):
+        return self.w.select({"html"}, [self.db_name],
+                             "where id=%s" % id)
 
     def get_sites_ip(self, id):
         return self.w.select({"data"}, [self.db_name],
@@ -83,6 +87,11 @@ class SiteData(object):
 
     def delete_site_data(self, id):
         return self.w.delete_site(self.NAME, id)
+
+    def get_last_record(self, site_id):
+        return self.w.select({"*"}, [self.db_name],
+                             "where site_id={0} order by date DESC LIMIT 1".format(site_id))
+
     #
     # def edit_site(self, fields, condition):
     #     return self.w.update(fields, self.NAME, condition)

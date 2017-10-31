@@ -166,3 +166,19 @@ pre {
     color: #fff;
     max-width: 900px;
 }
+
+.check_status {
+    float: right;
+    display: block;
+    border-radius: 8px;
+    color: white;
+    margin-left: 13px;
+    line-height: 1;
+    background: #de2626;
+    padding: 2px 4px;
+}
+
+.block {
+    margin: 20px 0;
+    border-bottom: 1px solid #1abc9c;
+}

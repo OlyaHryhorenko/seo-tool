@@ -17,7 +17,7 @@ class Conf:
         config.set(self.section, "host", "104.236.221.57")
         config.set(self.section, "user", "root")
         config.set(self.section, "password", "26klsU2gb3u30")
-        config.set(self.section, "db", "seo")
+        config.set(self.section, "db", "seo_dev")
         with open(self.file_name, "wb") as config_file:
             config.write(config_file)
 

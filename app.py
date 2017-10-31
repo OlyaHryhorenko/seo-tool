@@ -20,7 +20,6 @@ from BeautifulSoup import BeautifulSoup
 from flask import (Flask, Response, abort, jsonify, redirect, flash, render_template,
                    request, send_file, session, url_for, Markup, make_response)
 
-from apscheduler.scheduler import Scheduler
 from apps.models.wrapper import Wrapper
 from apps.models.users import Users
 from apps.models.sites import Sites
@@ -37,8 +36,6 @@ app = Flask(__name__)
 
 app.secret_key = 'sss'
 app.permanent_session_lifetime = datetime.timedelta(days=64)
-sched = Scheduler()
-sched.start()
 site_mail = 'o.grigorenko@bryteq.com'
 logging.basicConfig()
 start_time = time.time()
@@ -88,8 +85,7 @@ def login():
 
 @app.route('/logout',  methods=['GET'])
 def logout():
-    session['id'] = None
-    session['logged_in'] = False
+    session.clear()
     return redirect(url_for('index'))
 
 
@@ -145,7 +141,7 @@ def add_new():
     sitemap = requests.get(url + "/sitemap.xml")
     page = BeautifulSoup(response.content)
 
-    title = page.title
+    title = page.title.text
     h1 = page.find('h1')
     robots_content = BeautifulSoup(robots.content)
     html = page.prettify()
@@ -157,29 +153,19 @@ def add_new():
 
     meta_robots = "robots"
     # meta_title = page.find("meta", {"name": "title"})['content']
+    add_site_data = SiteData(Wrapper()).add_site_data({"site_id": add_new,
+                                                       "h1": h1,
+                                                       "title": title,
+                                                       "response_code": response_code,
+                                                       "meta_robots": robots_content,
+                                                       "sitemap": escape_string(str(sitemap_content)),
+                                                       "html": escape_string(str(html)),
+                                                       "meta_description": meta_description,
+                                                       "ip": ip,
+                                                       "date": curdatetime
+                                                       })
 
-    add_title = SiteData(Wrapper()).add_title({"site_id": add_new, "data": title, "type_id": "1",
-                                               "date": curdatetime})
-
-    add_h1 = SiteData(Wrapper()).add_h1({"site_id": add_new, "data": h1, "type_id": "2", "date": curdatetime})
-
-    add_response = SiteData(Wrapper()).add_response({"site_id": add_new, "data": response_code, "type_id": "3", "date": curdatetime})
-    add_robots = SiteData(Wrapper()).add_robots(
-        {"site_id": add_new, "data": robots_content, "type_id": "6", "date": curdatetime})
-
-    add_sitemap = SiteData(Wrapper()).add_sitemap(
-        {"site_id": add_new, "data": escape_string(str(sitemap_content)), "type_id": "7", "date": curdatetime})
-
-    add_html = SiteData(Wrapper()).add_html(
-        {"site_id": add_new, "data": escape_string(str(html)), "type_id": "8", "date": curdatetime})
-
-    add_ip = SiteData(Wrapper()).add_html(
-        {"site_id": add_new, "data": ip, "type_id": "9", "date": curdatetime})
-
-    add_description = SiteData(Wrapper()).add_html(
-        {"site_id": add_new, "data": meta_description, "type_id": "4", "date": curdatetime})
-
-    if add_new == "-1":
+    if add_site_data == "-1":
         flash('Error.Try again')  # this message gets lost
         return redirect(url_for('main'))
     return redirect(url_for('main'))
@@ -213,12 +199,29 @@ def site():
 
     sites_data = SiteData(Wrapper()).get_site_data(id)
     statuses = Statuses(Wrapper()).get_status(id)
-    # return jsonify(statuses)
 
     return render_template('site.html',
                            site=site,
                            statuses=statuses,
                            sites_data=sites_data)
+
+
+
+@app.route('/get-sitemap', methods=['GET'])
+def sitemap():
+    id = request.args.get('id')
+    sitemap = SiteData(Wrapper()).get_site_sitemap(id)
+    return render_template('sitemap.html',
+                           sitemap=sitemap[0]['sitemap'])
+
+
+@app.route('/get-html', methods=['GET'])
+def html():
+    id = request.args.get('id')
+    html = SiteData(Wrapper()).get_site_html(id)
+    return render_template('html.html',
+                           html=html[0]['html'])
+
 
 
 @app.route('/site-statistic', methods=['GET'])
@@ -387,9 +390,8 @@ def check_status_code():
             print "not changed"
     return True
 
-@sched.cron_schedule(second=30)
-def send_mail():
-    msg = "test"
+
+def send_mail(msg):
     smtp = SMTP()
     smtp.connect("mbxsrv.com")
     smtp.login("o.grigorenko@bryteq.com", "GueUhmXg")
@@ -401,23 +403,121 @@ def send_mail():
 
 @app.route('/test')
 def test():
-    msg = "test"
-    smtp = SMTP()
-    smtp.connect("mbxsrv.com")
-    smtp.login("o.grigorenko@bryteq.com", "GueUhmXg")
-    smtp.sendmail("noreply@bryteq.com", "olhahryhorencko@gmail.com", msg)
-    smtp.quit()
-    return '1'
+    curdatetime = time.strftime("%Y-%m-%d %H:%M:%S")
+    sites = Sites(Wrapper()).get_all()
+    for site in sites:
+        url = site['url']
+        id = site['id']
+        # get site info
+        response = requests.get(url)
+        response_code = response.status_code
+        robots = requests.get(url + "/robots.txt")
+        sitemap = requests.get(url + "/sitemap.xml")
+        page = BeautifulSoup(response.content)
+
+        title = page.title.text
+        h1 = page.find('h1')
+        robots_content = BeautifulSoup(robots.content)
+        html = page.prettify()
+
+        sitemap_content = BeautifulSoup(sitemap.content)
+        meta_description = page.find("meta", {"name": "description"})['content']
+        clear_url = url.replace("https://", "").strip("/")
+        ip = socket.gethostbyname(clear_url)
+
+        meta_robots = "robots"
+        # meta_title = page.find("meta", {"name": "title"})['content']
+        add_site_data = SiteData(Wrapper()).add_site_data({"site_id": id,
+                                                           "h1": h1,
+                                                           "title": title,
+                                                           "response_code": response_code,
+                                                           "meta_robots": robots_content,
+                                                           "sitemap": escape_string(str(sitemap_content)),
+                                                           "html": escape_string(str(html)),
+                                                           "meta_description": meta_description,
+                                                           "ip": ip,
+                                                           "date": curdatetime
+                                                           })
+        site_data = SiteData(Wrapper()).get_site_data_by_id(add_site_data)
+        last_record = SiteData(Wrapper()).get_last_record(id)
+        # check titles
+        if str(last_record[0]['title']) != str(site_data[0]['title']):
+            print "changed"
+            send_mail("Current title changed on {0} on {1}".format(site_data[0]['title'], url))
+            status = Statuses(Wrapper()).add_status({"site_id": id, "status_id": "2",
+                                                     "date": curdatetime, "type_id": "1",
+                                                     "data": "Current title %s" % site_data[0]['title']})
+        else:
+            print 'not changed'
+
+        # check h1
+        if str(last_record[0]['h1']) != str(site_data[0]['h1']):
+            print 'changed'
+            send_mail("Current h1 %s" % add_site_data[0]['h1'])
+            status = Statuses(Wrapper()).add_status({"site_id": id, "status_id": "2",
+                                                     "date": curdatetime, "type_id": "2",
+                                                     "data": "Current h1 %s" % site_data[0]['h1']})
+        else:
+            print "not changed"
+
+        # check get_sites_description
+
+        if str(last_record[0]['meta_description']) != str(site_data[0]['meta_description']):
+            print 'changed'
+            send_mail("Current description is {0} on {1}".format(site_data[0]['meta_description'], url))
+            status = Statuses(Wrapper()).add_status({"site_id": id, "status_id": "2",
+                                                     "date": curdatetime, "type_id": "4",
+                                                     "data": "Current description %s" % site_data[0]['meta_description']})
+        else:
+            print "not changed"
+
+        # check get_sites_sitemap
+
+        if str(last_record[0]['sitemap']) != str(site_data[0]['sitemap']):
+            print 'changed'
+            send_mail("Current sitemap changed on {0}".format(url))
+            status = Statuses(Wrapper()).add_status({"site_id": id, "status_id": "2",
+                                                     "date": curdatetime, "type_id": "7",
+                                                     "data": "Current sitemap changed"})
+        else:
+            print "not changed"
+
+        # check get_sites_html
+
+        if str(last_record[0]['html']) != str(site_data[0]['html']):
+            print 'changed'
+            send_mail("Current html changed on %s" % url)
+            status = Statuses(Wrapper()).add_status({"site_id": id, "status_id": "2",
+                                                     "date": curdatetime, "type_id": "8",
+                                                     "data": "Current html changed"})
+        else:
+            print "not changed"
+
+        # check ip
+
+        if str(last_record[0]['ip']) != str(site_data[0]['ip']):
+            print 'changed'
+            send_mail("Current ip changed on %s" % url)
+            status = Statuses(Wrapper()).add_status({"site_id": id, "status_id": "2",
+                                                     "date": curdatetime, "type_id": "8",
+                                                     "data": "Current ip changed for %s" % site_data[0]['ip']})
+        else:
+            print "not changed"
+
+        if add_site_data == "-1":
+            return "Error.Try again"
+        return "check done"
+
+
+@app.route('/test1')
+def test1():
+    id = 116
+    last_record = SiteData(Wrapper()).get_last_record(id)
+    return last_record[0]['title']
 
 
 if __name__ == "__main__":
-    # scheduler = BackgroundScheduler()
-    # scheduler.add_job(check_status, trigger='interval',  days=1)
-    # scheduler.add_job(check_status_code, trigger='interval', minutes=1)
-    # scheduler.add_job(test, trigger=IntervalTrigger(seconds=3))
-    # scheduler.start()
     app.secret_key = 'super secret key'
-    sched.add_cron_job(job_function,  minute=1)
     app.config['SESSION_TYPE'] = 'filesystem'
     app.run(debug=True)
 else:

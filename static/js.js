@@ -24,38 +24,10 @@ $('.delete-item').click(function(e){
    var docHeight = $(window).height();
    var footerHeight = $('footer').height();
    var footerTop = $('footer').position().top + footerHeight;
+    console.log(footerTop);
+    console.log(docHeight);
 
    if (footerTop < docHeight) {
     $('footer').css('margin-top', (docHeight - footerTop) + 'px');
    }
   });
-
-//  function check_status(){
-//    var item = $(this);
-//    var id = item.getAttribute('data-id');
-//    $.ajax({
-//            url: '/get-status?id='+id,
-//            success: function(response){
-//                console.log(response);
-//                $(this).html(response);
-//            }
-//        })
-//  }
-
-//  $(document).ready(function() {
-//    var arr = [];
-//    var item = $(".check_status");
-//
-//    console.log(item.length);
-//    for (i = 0; i <= item.length; i++) {
-//        var x = item[i].getAttribute('data-id');
-//         console.log(item[i]);
-//        $.ajax({
-//            url: '/get-status?id='+x,
-//            success: function(response){
-//                console.log(response);
-//            }
-//        })
-//    }
-//
-//  })
